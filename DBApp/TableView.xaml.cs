@@ -43,8 +43,20 @@ namespace DBApp
             this.Hide();
             
         }
+        private void TableOutput(string sql)
+        {
+            using(SqlConnection conn = new SqlConnection(connection))
+            {
+                conn.Open();
+                SqlDataAdapter sda = new SqlDataAdapter(sql, conn);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                table.ItemsSource = ds.Tables[0].DefaultView;
+            }
+        }
         private void ChildrenBenefitsTable(object sender, RoutedEventArgs e)
         {
+            TableOutput("exec [dbo].[showChildrenBenefitsTable]");/*
             using(SqlConnection conn = new SqlConnection(connection))
             {
                 string sql = "exec [dbo].[showChildrenBenefitsTable]";
@@ -53,10 +65,12 @@ namespace DBApp
                 DataSet ds = new DataSet();
                 sda.Fill(ds);
                 table.ItemsSource = ds.Tables[0].DefaultView;
-            }
+            }*/
         }
         private void SquadsTable(object sender, RoutedEventArgs e)
         {
+            TableOutput("exec [dbo].[showSquadsTable]");
+            /*
             using(SqlConnection conn = new SqlConnection(connection))
             {
                 string sql = "exec [dbo].[showSquadsTable]";
@@ -65,10 +79,12 @@ namespace DBApp
                 DataSet ds = new DataSet();
                 sda.Fill(ds);
                 table.ItemsSource = ds.Tables[0].DefaultView;
-            }
+            }*/
         }
         private void WorkersTable(object sender, RoutedEventArgs e)
         {
+            TableOutput("exec [dbo].[showWorkersTable]");
+            /*
             using (SqlConnection conn = new SqlConnection(connection))
             {
                 string sql = "exec [dbo].[showWorkersTable]";
@@ -77,10 +93,12 @@ namespace DBApp
                 DataSet ds = new DataSet();
                 sda.Fill(ds);
                 table.ItemsSource = ds.Tables[0].DefaultView;
-            }
+            }*/
         }
         private void ChildrenTable(object sender, RoutedEventArgs e)
         {
+            TableOutput("exec [dbo].[showChildrenTable]");
+            /*
             using (SqlConnection conn = new SqlConnection(connection))
             {
                 string sql = "exec [dbo].[showChildrenTable]";
@@ -89,56 +107,22 @@ namespace DBApp
                 DataSet ds = new DataSet();
                 sda.Fill(ds);
                 table.ItemsSource = ds.Tables[0].DefaultView;
-            }
+            }*/
         }
         private void CampsTable(object sender, RoutedEventArgs e)
         {
+            TableOutput("exec [dbo].[showCampsTable]");
+            /*
             using(SqlConnection conn = new SqlConnection(connection))
-            {
-                
-                //string sql = "exec [dbo].[showCampsTable]";
-                /*string sqlExpression = "showCampsTable";
-                conn.Open();
-                SqlCommand command = new SqlCommand(sqlExpression, conn);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                var reader = command.ExecuteReader();
-                List<Camp> camps = new List<Camp>();
-                if (reader.HasRows)
-                {
-                    Camp camp = new Camp();
-                    camp.id = reader.GetInt32(0);
-                    camp.name = reader.GetString(1);
-                    camp.description = reader.GetString(2);
-                    camp.directorName = reader.GetString(3);
-                    camp.managerName = reader.GetString(4);
-                    camps.Add(camp);
-                }
-                table.ItemsSource = camps;*/
+            {                
                 string sql = "exec [dbo].[showCampsTable]";
                 conn.Open();
                 SqlDataAdapter sda = new SqlDataAdapter(sql, conn);
                 DataSet ds = new DataSet();
                 sda.Fill(ds);
                 table.ItemsSource = ds.Tables[0].DefaultView;
-                /*
-                string sql = "select * from [dbo].[camps]";
-                conn.Open();
-                SqlCommand select = new SqlCommand(sql, conn);
-                SqlDataReader dataReader = select.ExecuteReader();
-                List<Camp> camps = new List<Camp>();
-                while (dataReader.Read())
-                {
-                    Camp camp = new Camp();
-                    camp.id = int.Parse(dataReader[0].ToString());
-                    camp.name = dataReader[1].ToString();
-                    camp.description = dataReader[2].ToString();
-                    camp.directorId = int.Parse(dataReader[3].ToString());
-                    camp.managerID = int.Parse(dataReader[4].ToString());
-                    camps.Add(camp);
-                }
-                table.ItemsSource = camps;
-                */
             }
+            */
         }
         private void OnClose(object sender, CancelEventArgs e)
         {

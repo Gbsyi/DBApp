@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,10 @@ namespace DBApp
         {
             this.Hide();
             this.Owner.Show();
+        }
+        private void OnClose(object sender, CancelEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }
