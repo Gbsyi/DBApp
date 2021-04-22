@@ -19,20 +19,62 @@
             <MenuItem Header="Просмотр">
                 <MenuItem Header="Лагеря" Click="CampsTable"></MenuItem>
                 <MenuItem Header="Отряды в лагере" Click="SquadsTable"></MenuItem>
+                <MenuItem Header="Расписание для группы" Click="ScheduleTable"></MenuItem>
                 <MenuItem Header="Дети">
                     <MenuItem Header="Льготы детей" Click="ChildrenBenefitsTable"></MenuItem>
                     <MenuItem Header="Вывод всех детей" Click="ChildrenTable"></MenuItem>
-                    <MenuItem Header="Дети в отряде"></MenuItem>
+                    <MenuItem Header="Дети в отряде" Click="ChildrenInSquadTable"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Сотрудники">
                     <MenuItem Header="Должности сотрудников" Click="WorkersTable"></MenuItem>
                 </MenuItem>
 
             </MenuItem>
-            <MenuItem Header="Добавить"></MenuItem>
+            <MenuItem Header="Добавить">
+                <MenuItem Header="Сотрудника" Click="AddWorker"></MenuItem>
+            </MenuItem>
             <MenuItem Header="Справка"></MenuItem>
             <MenuItem Header="Смена пользователя" Click="ChangeAccount"></MenuItem>
         </Menu>
+        <TabControl Grid.Row="1" x:Name="tabPanel">
+            <TabItem>
+                <TabItem.Header>Фильтр</TabItem.Header>
+                    <TabItem.Content>
+                    <DockPanel>
+                        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" x:Name="filterTitle">Фильтр</Label>
+                        <Label DockPanel.Dock="Top" Margin="10 0 0 0" Visibility="Hidden" x:Name="chouseGroupLabel">Группа:</Label>
+                        <ComboBox DockPanel.Dock="Top" x:Name="chooseGroup" Margin="10 0 10 10" SelectedIndex="0" SelectionChanged="groupSelect" Visibility="Hidden"></ComboBox>
+                        <Label DockPanel.Dock="Top"></Label>
+                    </DockPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>Добавление</TabItem.Header>
+                <TabItem.Content>
+                    <DockPanel>
+                        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" x:Name="addTitle" Visibility="Hidden">Добавление</Label>
+                        <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header1" Visibility="Hidden">Заголовок 1</Label>
+                        <TextBox DockPanel.Dock="Top" Margin="10 0" x:Name="add1" Visibility="Hidden"></TextBox>
+                        <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header2" Visibility="Hidden">Заголовок 2</Label>
+                        <TextBox DockPanel.Dock="Top" Margin="10 0" x:Name="add2" Visibility="Hidden"></TextBox>
+                        <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header3" Visibility="Hidden">Заголовок 3</Label>
+                        <TextBox DockPanel.Dock="Top" Margin="10 0" x:Name="add3" Visibility="Hidden"></TextBox>
+                        <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header4" Visibility="Hidden">Заголовок 4</Label>
+                        <TextBox DockPanel.Dock="Top" Margin="10 0" x:Name="add4" Visibility="Hidden"></TextBox>
+                        <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header5" Visibility="Hidden">Заголовок 5</Label>
+                        <TextBox DockPanel.Dock="Top" Margin="10 0" x:Name="add5" Visibility="Hidden"></TextBox>
+                        <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header6" Visibility="Hidden">Заголовок 6</Label>
+                        <TextBox DockPanel.Dock="Top" Margin="10 0" x:Name="add6" Visibility="Hidden"></TextBox>
+                        <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header7" Visibility="Hidden">Заголовок 7</Label>
+                        <TextBox DockPanel.Dock="Top" Margin="10 0" x:Name="add7" Visibility="Hidden"></TextBox>
+                        <Button DockPanel.Dock="Bottom" Margin="10 20" Padding="0 5" x:Name="addButton" Visibility="Hidden" Click="AddButton_Click">Добавить</Button>
+                        <Label DockPanel.Dock="Top"></Label>
+
+                    </DockPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        
         <DataGrid x:Name="table" Grid.Row="1" Grid.Column="1" IsReadOnly="true"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"

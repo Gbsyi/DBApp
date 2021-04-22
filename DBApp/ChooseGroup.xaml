@@ -1,0 +1,26 @@
+﻿<Window x:Class="DBApp.ChooseGroup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DBApp"
+        mc:Ignorable="d"
+        Title="ChooseGroup" Height="150" Width="190" Loaded="WindowLoaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="8*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Выберите название группы:" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,44" Grid.RowSpan="2"></Label>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="groupChoose" Grid.ColumnSpan="2" ItemsSource="{Binding}"/>
+        <Button Grid.Column="1" Grid.Row="1" Click="Submit" Grid.ColumnSpan="2" Margin="0,44,0,0" Grid.RowSpan="2">Поиск</Button>
+    </Grid>
+</Window>
