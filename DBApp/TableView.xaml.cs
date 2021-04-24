@@ -26,10 +26,14 @@ namespace DBApp
         private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
         private LoginPage login = new LoginPage();
         private Insert insert = new();
+        //private int visiblePanels = 0;
+        private DataGrid mainTable = new DataGrid() { IsReadOnly = true};
         public TableView()
         {
             InitializeComponent();
+            
 
+            
             login.Show();
         }
         //Мои методы
@@ -46,7 +50,19 @@ namespace DBApp
                 conn.Close();
             }
         }
-        private void HidePanelContent()
+        private void TableOutput(string sql, DataGrid dataGrid)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                conn.Open();
+                SqlDataAdapter sda = new SqlDataAdapter(sql, conn);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                dataGrid.ItemsSource = ds.Tables[0].DefaultView;
+                conn.Close();
+            }
+        }
+        private void Refresh()
         {
             //Вкладка "Фильтр"
             filterTitle.Visibility = Visibility.Hidden;
@@ -56,6 +72,8 @@ namespace DBApp
             //Вкладка "Добавление"
             addTitle.Visibility = Visibility.Hidden;
 
+            comboHeader1.Visibility = Visibility.Hidden;
+            comboHeader1.Height = 0; // Базовый = 25.96
             header1.Visibility = Visibility.Hidden;
             header2.Visibility = Visibility.Hidden;
             header3.Visibility = Visibility.Hidden;
@@ -63,6 +81,9 @@ namespace DBApp
             header5.Visibility = Visibility.Hidden;
             header6.Visibility = Visibility.Hidden;
             header7.Visibility = Visibility.Hidden;
+
+            combo1.Visibility = Visibility.Hidden;
+            combo1.Height = 0; //Базовый = 21.96
 
             add1.Visibility = Visibility.Hidden;
             add2.Visibility = Visibility.Hidden;
@@ -73,8 +94,22 @@ namespace DBApp
             add7.Visibility = Visibility.Hidden;
 
             addButton.Visibility = Visibility.Hidden;
+
+            //
+            tableTabs.Items.Clear();
+            //tableTabs.Items;
         }
 
+        public void InsertInTable()
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                conn.Open();
+                string command = insert.GetTableCommand();
+                SqlCommand com = new SqlCommand(command, conn);
+                com.ExecuteNonQuery();
+            }
+        }
         //Методы, связанные с .xaml
         public void TableViewLoaded(object sender, RoutedEventArgs e)
         {
@@ -89,7 +124,7 @@ namespace DBApp
        
         private void ScheduleTable(object sender, RoutedEventArgs e)
         {
-            HidePanelContent();
+            Refresh();
             tabPanel.SelectedIndex = 0;
             List<string> groups = new List<string>();
             using (SqlConnection conn = new SqlConnection(connection))
@@ -129,34 +164,64 @@ namespace DBApp
         }
         private void ChildrenBenefitsTable(object sender, RoutedEventArgs e)
         {
-            HidePanelContent();
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Льготы детей",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
             tabPanel.SelectedIndex = 0;
-            TableOutput("exec [dbo].[showChildrenBenefitsTable]");
+            TableOutput("exec [dbo].[showChildrenBenefitsTable]", mainTable);
         }
         private void WorkersTable(object sender, RoutedEventArgs e)
         {
-            HidePanelContent();
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Сотрудники",
+                Content = mainTable
+            });
             tabPanel.SelectedIndex = 0;
-            TableOutput("exec [dbo].[showWorkersTable]");
+            tableTabs.SelectedIndex = 0;
+            TableOutput("exec [dbo].[showWorkersTable]", mainTable);
 
         }
         private void SquadsTable(object sender, RoutedEventArgs e)
         {
-            HidePanelContent();
+            Refresh(); 
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Отряды",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
             tabPanel.SelectedIndex = 0;
-            TableOutput("exec [dbo].[showSquadsTable]");
+            TableOutput("exec [dbo].[showSquadsTable]", mainTable);
         }
         private void ChildrenTable(object sender, RoutedEventArgs e)
         {
-            HidePanelContent();
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Дети",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0; 
             tabPanel.SelectedIndex = 0;
-            TableOutput("exec [dbo].[showChildrenTable]");
+            TableOutput("exec [dbo].[showChildrenTable]", mainTable);
         }
         private void CampsTable(object sender, RoutedEventArgs e)
         {
-            HidePanelContent();
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Лагеря",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
             tabPanel.SelectedIndex = 0;
-            TableOutput("exec [dbo].[showCampsTable]");
+            TableOutput("exec [dbo].[showCampsTable]", mainTable);
         }
         private void ChildrenInSquadTable(object sender, RoutedEventArgs e)
         {
@@ -170,7 +235,7 @@ namespace DBApp
         
         public void AddWorker(object sender, RoutedEventArgs e)
         {
-            HidePanelContent();
+            Refresh();
 
             addTitle.Visibility = Visibility.Visible;
 
@@ -193,24 +258,51 @@ namespace DBApp
             TableOutput("exec [dbo].[showWorkers]");
 
         }
+        public void AddWorkerPosition(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            addTitle.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Сотрудника";
+            header1.Visibility = Visibility.Visible;
+            add1.Visibility = Visibility.Visible;
+            
+            header2.Content = "Должность";
+            header2.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+            
+            addButton.Visibility = Visibility.Visible;
+            
+            tabPanel.SelectedIndex = 1;
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Должности сотрудников",
+                Content = mainTable
+            });
+            TableOutput("exec [dbo].[showWorkersTable]", mainTable);
+            DataGrid workersTable = new();
+            TableOutput("exec [dbo].[showWorkers]", workersTable);
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Сотрудники",
+                Content = workersTable
+            });
+        }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             if(add1.Text != "" && add2.Text != "" && add3.Text != ""){
-                using (SqlConnection conn = new SqlConnection(connection))
-                {
-                    conn.Open();
-                    List<string> vars = new();
+                List<string> vars = new();
 
-                    vars.Add(add1.Text);
-                    vars.Add(add2.Text);
-                    vars.Add(add3.Text);
+                vars.Add(add1.Text);
+                vars.Add(add2.Text);
+                vars.Add(add3.Text);
+                
 
-                    insert.SetVars(vars);
-                    
-                    string command = insert.GetTableCommand();
-                    SqlCommand com = new SqlCommand(command, conn);
-                    com.ExecuteNonQuery();
-                }
+                insert.SetVars(vars);
+
+                InsertInTable();
+                
                 add1.Clear();
                 add2.Clear();
                 add3.Clear();
@@ -223,13 +315,18 @@ namespace DBApp
         }
         public void ShowChildrenInSquadTable(int squad)
         {
-            HidePanelContent();
+            Refresh();
             TableOutput($"exec [dbo].[showChildrenInSquad] {squad}");
         }
         
         private void OnClose(object sender, CancelEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void table_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
