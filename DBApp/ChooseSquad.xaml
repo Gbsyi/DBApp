@@ -5,20 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
-        Title="Выбор отряда" Height="150" Width="190" ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="ToolWindow">
+        Title="Выбор отряда" Height="500" Width="1000" ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="ToolWindow" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition />
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Введите имя отряда:" Grid.Row="0" Grid.Column="1"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="choose"></TextBox>
-        <Button Grid.Column="1" Grid.Row="2" Click="Submit">Поиск</Button>
+        <DataGrid x:Name="table"></DataGrid>
+        <DockPanel Grid.Column="1">
+            <Label Content="Введите ID отряда:" DockPanel.Dock="Top" Margin="10 50 10 0"></Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="choose" DockPanel.Dock="Top" Margin="10 0 10 10"></TextBox>
+            <Button Grid.Column="1" Grid.Row="2" Click="Submit" DockPanel.Dock="Top" Margin="10 0 10 0" Padding="0 5 0 5">Поиск</Button>
+            <Label DockPanel.Dock="Bottom" />
+        </DockPanel>
+        
     </Grid>
 </Window>

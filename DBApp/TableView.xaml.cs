@@ -32,8 +32,6 @@ namespace DBApp
         {
             InitializeComponent();
             
-
-            
             login.Show();
         }
         //Мои методы
@@ -100,16 +98,6 @@ namespace DBApp
             //tableTabs.Items;
         }
 
-        public void InsertInTable()
-        {
-            using (SqlConnection conn = new SqlConnection(connection))
-            {
-                conn.Open();
-                string command = insert.GetTableCommand();
-                SqlCommand com = new SqlCommand(command, conn);
-                com.ExecuteNonQuery();
-            }
-        }
         //Методы, связанные с .xaml
         public void TableViewLoaded(object sender, RoutedEventArgs e)
         {
@@ -126,6 +114,23 @@ namespace DBApp
         {
             Refresh();
             tabPanel.SelectedIndex = 0;
+
+            filterTitle.Visibility = Visibility.Visible;
+            filterHeader1.Visibility = Visibility.Visible;
+            filterHeader1.Content = "ID Группы:";
+            filter1.Visibility = Visibility.Visible;
+            filterButton.Visibility = Visibility.Visible;
+
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список групп",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput("select * from [camp_groups]", mainTable);
+
+            /*tabPanel.SelectedIndex = 0;
             List<string> groups = new List<string>();
             using (SqlConnection conn = new SqlConnection(connection))
             {
@@ -141,13 +146,18 @@ namespace DBApp
             filterTitle.Visibility = Visibility.Visible;
             chooseGroup.Visibility = Visibility.Visible;
             chouseGroupLabel.Visibility = Visibility.Visible;
-            chooseGroup.ItemsSource = groups;
-            
-            //Grid.SetRow(chooseGroup, 1);
-            //Через доп. окно
-            /*ChooseGroup chooseGroup = new ChooseGroup();
-            chooseGroup.Owner = this;
-            chooseGroup.Show();*/
+            chooseGroup.ItemsSource = groups;*/
+        }
+        private void ApplyFilter(object sender, RoutedEventArgs e)
+        {
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Льготы детей",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput("select * from [camp_groups]", mainTable);
         }
         private void groupSelect(object sender, RoutedEventArgs e)
         {
@@ -227,6 +237,7 @@ namespace DBApp
         {
 
             ChooseSquad chooseSquad = new ChooseSquad();
+            chooseSquad.command = "select * from [dbo].[squads]";
             chooseSquad.Show();
             chooseSquad.Owner = this;
 
@@ -301,8 +312,14 @@ namespace DBApp
 
                 insert.SetVars(vars);
 
-                InsertInTable();
-                
+                using (SqlConnection conn = new SqlConnection(connection))
+                {
+                    conn.Open();
+                    string command = insert.GetTableCommand();
+                    SqlCommand com = new SqlCommand(command, conn);
+                    com.ExecuteNonQuery();
+                }
+
                 add1.Clear();
                 add2.Clear();
                 add3.Clear();

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +20,9 @@ namespace DBApp
     /// Логика взаимодействия для ChooseSquad.xaml
     /// </summary>
     public partial class ChooseSquad : Window
-    {   
-
+    {
+        private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
+        public string command;
         public ChooseSquad()
         {
             InitializeComponent();
@@ -30,6 +33,19 @@ namespace DBApp
             TableView parent = (TableView)this.Owner;
             parent.ShowChildrenInSquadTable(int.Parse(choose.Text));
             this.Close();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                conn.Open();
+                SqlDataAdapter sda = new SqlDataAdapter(command, conn);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                table.ItemsSource = ds.Tables[0].DefaultView;
+                conn.Close();
+            }
         }
     }
 }

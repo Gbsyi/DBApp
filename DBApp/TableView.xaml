@@ -43,8 +43,11 @@
                 <TabItem.Content>
                     <DockPanel>
                         <Label DockPanel.Dock="Top" HorizontalAlignment="Center" x:Name="filterTitle">Фильтр</Label>
-                        <Label DockPanel.Dock="Top" Margin="10 0 0 0" Visibility="Hidden" x:Name="chouseGroupLabel">Группа:</Label>
-                        <ComboBox DockPanel.Dock="Top" x:Name="chooseGroup" Margin="10 0 10 10" SelectedIndex="0" SelectionChanged="groupSelect" Visibility="Hidden"></ComboBox>
+                        <Label DockPanel.Dock="Top" Margin="10 0 0 0" Visibility="Hidden" x:Name="chouseGroupLabel" Height="0">Группа:</Label>
+                        <ComboBox DockPanel.Dock="Top" x:Name="chooseGroup" Margin="10 0 10 10" SelectedIndex="0" SelectionChanged="groupSelect" Height="0" Visibility="Hidden"></ComboBox>
+                        <Label DockPanel.Dock="Top" x:Name="filterHeader1" Margin="10 0 0 0" Visibility="Hidden">Заголовок</Label>
+                        <TextBox DockPanel.Dock="Top" x:Name="filter1" Margin="10 0 10 10" Visibility="Hidden"></TextBox>
+                        <Button DockPanel.Dock="Bottom" Margin="10 20" Padding="0 5" x:Name="filterButton" Visibility="Hidden" Click="ApplyFilter">Применить</Button>
                         <Label DockPanel.Dock="Top"></Label>
                     </DockPanel>
                 </TabItem.Content>
