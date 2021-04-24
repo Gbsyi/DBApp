@@ -21,8 +21,10 @@ namespace DBApp
     /// </summary>
     public partial class ChooseSquad : Window
     {
+        public delegate void Output(int returnNumber);
         private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
         public string command;
+        public Output output;
         public ChooseSquad()
         {
             InitializeComponent();
@@ -31,10 +33,11 @@ namespace DBApp
         {
             //chooseInt = int.Parse(choose.Text);
             TableView parent = (TableView)this.Owner;
-            parent.ShowChildrenInSquadTable(int.Parse(choose.Text));
+            //parent.ShowChildrenInSquadTable(int.Parse(choose.Text));
+            output(int.Parse(choose.Text));
             this.Close();
         }
-
+        private void a() { }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             using (SqlConnection conn = new SqlConnection(connection))

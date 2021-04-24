@@ -238,12 +238,24 @@ namespace DBApp
 
             ChooseSquad chooseSquad = new ChooseSquad();
             chooseSquad.command = "select * from [dbo].[squads]";
+            chooseSquad.output = ShowChildrenInSquadTable;
             chooseSquad.Show();
             chooseSquad.Owner = this;
 
            
         }
-        
+        public void ShowChildrenInSquadTable(int squad)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Дети в отряде",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showChildrenInSquad] {squad}", mainTable);
+        }
         public void AddWorker(object sender, RoutedEventArgs e)
         {
             Refresh();
@@ -330,11 +342,7 @@ namespace DBApp
                 MessageBox.Show("Необходимо заполнить все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        public void ShowChildrenInSquadTable(int squad)
-        {
-            Refresh();
-            TableOutput($"exec [dbo].[showChildrenInSquad] {squad}");
-        }
+       
         
         private void OnClose(object sender, CancelEventArgs e)
         {
