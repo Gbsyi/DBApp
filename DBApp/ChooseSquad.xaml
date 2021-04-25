@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <DataGrid x:Name="table"></DataGrid>
         <DockPanel Grid.Column="1">
-            <Label Content="Введите ID отряда:" DockPanel.Dock="Top" Margin="10 50 10 0"></Label>
+            <Label Content="Введите ID:" DockPanel.Dock="Top" Margin="10 50 10 0"></Label>
             <TextBox Grid.Row="1" Grid.Column="1" Name="choose" DockPanel.Dock="Top" Margin="10 0 10 10"></TextBox>
             <Button Grid.Column="1" Grid.Row="2" Click="Submit" DockPanel.Dock="Top" Margin="10 0 10 0" Padding="0 5 0 5">Поиск</Button>
             <Label DockPanel.Dock="Bottom" />

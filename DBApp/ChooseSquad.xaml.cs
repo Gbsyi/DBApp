@@ -21,7 +21,7 @@ namespace DBApp
     /// </summary>
     public partial class ChooseSquad : Window
     {
-        public delegate void Output(int returnNumber);
+        public delegate void Output(string returnNumber);
         private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
         public string command;
         public Output output;
@@ -34,10 +34,9 @@ namespace DBApp
             //chooseInt = int.Parse(choose.Text);
             TableView parent = (TableView)this.Owner;
             //parent.ShowChildrenInSquadTable(int.Parse(choose.Text));
-            output(int.Parse(choose.Text));
+            output(choose.Text);
             this.Close();
         }
-        private void a() { }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             using (SqlConnection conn = new SqlConnection(connection))

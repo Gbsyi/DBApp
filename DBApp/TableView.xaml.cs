@@ -66,6 +66,7 @@ namespace DBApp
             filterTitle.Visibility = Visibility.Hidden;
             chooseGroup.Visibility = Visibility.Hidden;
             chouseGroupLabel.Visibility = Visibility.Hidden;
+            filterButton.Visibility = Visibility.Hidden;
 
             //Вкладка "Добавление"
             addTitle.Visibility = Visibility.Hidden;
@@ -113,14 +114,20 @@ namespace DBApp
         private void ScheduleTable(object sender, RoutedEventArgs e)
         {
             Refresh();
-            tabPanel.SelectedIndex = 0;
+            /*tabPanel.SelectedIndex = 0;
 
             filterTitle.Visibility = Visibility.Visible;
             filterHeader1.Visibility = Visibility.Visible;
             filterHeader1.Content = "ID Группы:";
             filter1.Visibility = Visibility.Visible;
             filterButton.Visibility = Visibility.Visible;
-
+            */
+            ChooseSquad chooseSquad = new();
+            chooseSquad.command = "select * from [camp_groups]";
+            chooseSquad.Owner = this;
+            chooseSquad.output = showSchedule;
+            chooseSquad.Show();
+            /*
             tableTabs.Items.Add(new TabItem
             {
                 Header = "Список групп",
@@ -128,7 +135,7 @@ namespace DBApp
             });
             tableTabs.SelectedIndex = 0;
             tabPanel.SelectedIndex = 0;
-            TableOutput("select * from [camp_groups]", mainTable);
+            TableOutput("select * from [camp_groups]", mainTable);*/
 
             /*tabPanel.SelectedIndex = 0;
             List<string> groups = new List<string>();
@@ -147,6 +154,18 @@ namespace DBApp
             chooseGroup.Visibility = Visibility.Visible;
             chouseGroupLabel.Visibility = Visibility.Visible;
             chooseGroup.ItemsSource = groups;*/
+        }
+        private void showSchedule(string id)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Расписание для группы",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showCampSchedule] {id}", mainTable);
         }
         private void ApplyFilter(object sender, RoutedEventArgs e)
         {
@@ -244,7 +263,7 @@ namespace DBApp
 
            
         }
-        public void ShowChildrenInSquadTable(int squad)
+        public void ShowChildrenInSquadTable(string squad)
         {
             Refresh();
             tableTabs.Items.Add(new TabItem
@@ -256,6 +275,177 @@ namespace DBApp
             tabPanel.SelectedIndex = 0;
             TableOutput($"exec [dbo].[showChildrenInSquad] {squad}", mainTable);
         }
+        private void WorkersWithPositionsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Сотрудники",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput("exec [dbo].[showWorkersWithPosition]", mainTable);
+        }
+        private void ShiftsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Смены сотрудников",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showShifts]", mainTable);
+        }
+        private void HousesTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Корпуса",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showHouses]", mainTable);
+        }
+        private void SeasonsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Корпуса",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showSeasons]", mainTable);
+        }
+        private void ClubsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список кружков",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showClubs]", mainTable);
+        }
+        private void ClubsOrganizersTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Организаторы кружков",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showClubsOrganizers]", mainTable);
+        }
+        private void ChildrenInClubsTable(object sener,RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список детей в кружках",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showChildrenInClubs]", mainTable);
+        }
+        private void BenefitsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список льгот",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showBenefits]", mainTable);
+        }
+        private void CampGroupsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список лагерей в группах",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showCampGroups]", mainTable);
+        }
+        private void GroupsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список групп лагерей",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showGroups]", mainTable);
+        }
+        private void CampEventsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Расписание",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showCampEvents]", mainTable);
+        }
+        private void EventsTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "События",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showEvents]", mainTable);
+        }
+        private void EventOrganizersTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список групп организаторов",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showEventOrganizers]", mainTable);
+        }
+        private void GroupsOfOrganizersTable(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Список организаторов в группах",
+                Content = mainTable
+            });
+            tableTabs.SelectedIndex = 0;
+            tabPanel.SelectedIndex = 0;
+            TableOutput($"exec [dbo].[showGroupsOfOrganizers]", mainTable);
+        }
+
+
+        //Добавление
         public void AddWorker(object sender, RoutedEventArgs e)
         {
             Refresh();
@@ -342,8 +532,8 @@ namespace DBApp
                 MessageBox.Show("Необходимо заполнить все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-       
         
+            
         private void OnClose(object sender, CancelEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();

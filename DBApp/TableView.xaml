@@ -17,9 +17,27 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <MenuItem Header="Просмотр">
-                <MenuItem Header="Лагеря" Click="CampsTable"></MenuItem>
-                <MenuItem Header="Отряды в лагере" Click="SquadsTable"></MenuItem>
-                <MenuItem Header="Расписание для группы" Click="ScheduleTable"></MenuItem>
+                <MenuItem Header="Лагерь">
+                    <MenuItem Header="Лагеря" Click="CampsTable"></MenuItem>
+                    <MenuItem Header="Список сезонов" Click="SeasonsTable"></MenuItem>
+                    <MenuItem Header="Отряды в лагере" Click="SquadsTable"></MenuItem>
+                    <MenuItem Header="Расписание для группы" Click="ScheduleTable"></MenuItem>
+                    <MenuItem Header="Корпуса" Click="HousesTable"></MenuItem>
+                    <MenuItem Header="Список льгот" Click="BenefitsTable"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Расписание">
+                    <MenuItem Header="Список групп лагерей" Click="GroupsTable"></MenuItem>
+                    <MenuItem Header="Список лагерей в группах" Click="CampGroupsTable"></MenuItem>
+                    <MenuItem Header="Расписание" Click="CampEventsTable"></MenuItem>
+                    <MenuItem Header="Список событий" Click="EventsTable"></MenuItem>
+                    <MenuItem Header="Список групп организаторов" Click="EventOrganizersTable"></MenuItem>
+                    <MenuItem Header="Список организаторов в группах" Click="GroupsOfOrganizersTable"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Кружки">
+                    <MenuItem Header="Список кружков" Click="ClubsTable"></MenuItem>
+                    <MenuItem Header="Организаторы" Click="ClubsOrganizersTable"></MenuItem>
+                    <MenuItem Header="Список детей в кружках" Click="ChildrenInClubsTable"></MenuItem>
+                </MenuItem>
                 <MenuItem Header="Дети">
                     <MenuItem Header="Льготы детей" Click="ChildrenBenefitsTable"></MenuItem>
                     <MenuItem Header="Вывод всех детей" Click="ChildrenTable"></MenuItem>
@@ -27,6 +45,8 @@
                 </MenuItem>
                 <MenuItem Header="Сотрудники">
                     <MenuItem Header="Должности сотрудников" Click="WorkersTable"></MenuItem>
+                    <MenuItem Header="Сотрудники" Click="WorkersWithPositionsTable"></MenuItem>
+                    <MenuItem Header="Смены сотрудников" Click="ShiftsTable"></MenuItem>
                 </MenuItem>
 
             </MenuItem>
