@@ -69,7 +69,6 @@ namespace DBApp
             filterButton.Visibility = Visibility.Hidden;
 
             //Вкладка "Добавление"
-            addTitle.Visibility = Visibility.Hidden;
 
             comboHeader1.Visibility = Visibility.Hidden;
             comboHeader1.Height = 0; // Базовый = 25.96
@@ -111,6 +110,7 @@ namespace DBApp
 
         }
        
+        //Пункт меню "Просмотр"
         private void ScheduleTable(object sender, RoutedEventArgs e)
         {
             Refresh();
@@ -445,7 +445,7 @@ namespace DBApp
         }
 
 
-        //Добавление
+        //Пункт меню "Добавление"
         delegate void Select(object sender, RoutedEventArgs e);
         Select selectVoid;
 
@@ -529,7 +529,6 @@ namespace DBApp
         private void AddCamp(object sender, RoutedEventArgs e)
         {
             Refresh();
-            addTitle.Visibility = Visibility.Visible;
 
             header1.Visibility = Visibility.Visible;
             header2.Visibility = Visibility.Visible;
@@ -573,14 +572,159 @@ namespace DBApp
 
             selectVoid = AddCamp;
         }
+        private void AddSquad(object sender, RoutedEventArgs e)
+        {
+            Refresh();
 
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+            header3.Visibility = Visibility.Visible;
+            header4.Visibility = Visibility.Visible;
+            header5.Visibility = Visibility.Visible;
+            header6.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+            add3.Visibility = Visibility.Visible;
+            add4.Visibility = Visibility.Visible;
+            add5.Visibility = Visibility.Visible;
+            add6.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название";
+            header2.Content = "ID Лагеря";
+            header3.Content = "ID Вожатого";
+            header4.Content = "ID Старшего вожатого";
+            header5.Content = "ID Сезона";
+            header6.Content = "ID Корпуса";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 1;
+            insert.insertCommand = @"insert into [dbo].[squads] values('?',?,?,?,?,?)";
+
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Отряды",
+                Content = mainTable
+            });
+            TableOutput("exec [dbo].[showSquadsTable]", mainTable);
+
+            DataGrid campsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Лагеря",
+                Content = campsTable
+            });
+            TableOutput("exec [dbo].[showCampsTable]", campsTable);
+
+            DataGrid workersTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Сотрудники",
+                Content = workersTable
+            });
+            TableOutput("exec [dbo].[showWorkersTable]", workersTable);
+
+            DataGrid seasonsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Сезоны",
+                Content = seasonsTable
+            });
+            TableOutput("exec [dbo].[showSeasons]", seasonsTable);
+
+            DataGrid housesTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Корпуса",
+                Content = housesTable
+            });
+            TableOutput("exec [dbo].[showHouses]", housesTable);
+
+            selectVoid = AddSquad;
+        }
+        private void AddHouse(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+            
+            header1.Content = "Название";
+            header2.Content = "Количество комнат";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[houses] values('?',?)";
+
+            tableTabs.Items.Add(new TabItem {Header = "Корпуса", Content = mainTable});
+            TableOutput("exec [dbo].[showHouses]", mainTable);
+
+            selectVoid = AddHouse;
+        }
+        private void AddSeason(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+            header3.Visibility = Visibility.Visible;
+
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+            add3.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название";
+            header2.Content = "Дата начала (ГГГГ-ММ-ДД)";
+            header3.Content = "Дата окончания (ГГГГ-ММ-ДД)";
+ 
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[seasons] values('?','?','?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Сезоны", Content = mainTable });
+            TableOutput("exec [dbo].[showSeasons]", mainTable);
+
+            selectVoid = AddSeason;
+        }
+        private void AddPosition(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название должности";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[positions] values('?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Должности", Content = mainTable });
+            TableOutput("exec [dbo].[showPositions]", mainTable);
+
+            selectVoid = AddPosition;
+        }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             if (add1.Text != "" 
-                && (add2.Text != "" || add2.Visibility == Visibility.Hidden) 
-                && (add3.Text != "" || add3.Visibility == Visibility.Hidden) 
-                && (add4.Text != "" || add4.Visibility == Visibility.Hidden)
-            )
+            && (add2.Text != "" || add2.Visibility == Visibility.Hidden) 
+            && (add3.Text != "" || add3.Visibility == Visibility.Hidden) 
+            && (add4.Text != "" || add4.Visibility == Visibility.Hidden)
+            && (add5.Text != "" || add5.Visibility == Visibility.Hidden)
+            && (add6.Text != "" || add6.Visibility == Visibility.Hidden)
+            && (add7.Text != "" || add7.Visibility == Visibility.Hidden))
             {
                 List<string> vars = new();
 

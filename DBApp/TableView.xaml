@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
         Title="Window1" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Loaded="TableViewLoaded" Closing="OnClose">
@@ -51,10 +52,17 @@
 
             </MenuItem>
             <MenuItem Header="Добавить">
-                <MenuItem Header="Сотрудника" Click="AddWorker"></MenuItem>
-                <MenuItem Header="Должность сотруднику" Click="AddWorkerPosition"></MenuItem>
+                
                 <MenuItem Header="Лагерь">
                     <MenuItem Header="Новый лагерь" Click="AddCamp"></MenuItem>
+                    <MenuItem Header="Отряд" Click="AddSquad"></MenuItem>
+                    <MenuItem Header="Корпус" Click="AddHouse"></MenuItem>
+                    <MenuItem Header="Сезон" Click="AddSeason"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Сотрудики">
+                    <MenuItem Header="Сотрудника" Click="AddWorker"></MenuItem>
+                    <MenuItem Header="Должность" Click="AddPosition"></MenuItem>
+                    <MenuItem Header="Должность сотруднику" Click="AddWorkerPosition"></MenuItem>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Справка"></MenuItem>
@@ -79,7 +87,7 @@
                 <TabItem.Header>Добавление</TabItem.Header>
                 <TabItem.Content>
                     <DockPanel>
-                        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" x:Name="addTitle" Visibility="Hidden">Добавление</Label>
+                        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" x:Name="addTitle">Добавление</Label>
                         <Label DockPanel.Dock="Top" Margin="10 0" x:Name="comboHeader1" Visibility="Hidden" Height="0">Заголовок</Label>
                         <ComboBox DockPanel.Dock="Top" Margin="10 0" x:Name="combo1" Visibility="Hidden" Height="0"></ComboBox>
                         <Label DockPanel.Dock="Top" Margin="10 0" x:Name="header1" Visibility="Hidden">Заголовок</Label>
