@@ -58,11 +58,28 @@
                     <MenuItem Header="Отряд" Click="AddSquad"></MenuItem>
                     <MenuItem Header="Корпус" Click="AddHouse"></MenuItem>
                     <MenuItem Header="Сезон" Click="AddSeason"></MenuItem>
+                    <MenuItem Header="Кружок" Click="AddClub"></MenuItem>
+                    <MenuItem Header="Организатора кружка" Click="AddClubOrganizer"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Расписание">
+                    <MenuItem Header="Добавить событие" Click="AddEvent"></MenuItem>
+                    <MenuItem Header="Добавить пункт расписания" Click="AddCampEvent"></MenuItem>
+                    <MenuItem Header="Добавить группу лагерей" Click="AddCampGroup"></MenuItem>
+                    <MenuItem Header="Добавить лагерь к группе" Click="AddGroupOfCamps"></MenuItem>
+                    <MenuItem Header="Добавить группу организаторов" Click="AddOrganizersGroup"></MenuItem>
+                    <MenuItem Header="Добавить сотрудника к группе" Click="AddGroupOfOrganizers"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Дети">
+                    <MenuItem Header="Добавить ребёнка" Click="AddChildren"></MenuItem>
+                    <MenuItem Header="Записать ребёнка в кружок" Click="AddChildrenToClub"></MenuItem>
+                    <MenuItem Header="Добавить льготу ребёнку" Click="AddBenefitsToChildren"></MenuItem>
+                    <MenuItem Header="Добавить новую льготу" Click="AddBenefit"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Сотрудики">
                     <MenuItem Header="Сотрудника" Click="AddWorker"></MenuItem>
                     <MenuItem Header="Должность" Click="AddPosition"></MenuItem>
                     <MenuItem Header="Должность сотруднику" Click="AddWorkerPosition"></MenuItem>
+                    <MenuItem Header="Смены" Click="AddShift"></MenuItem>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Справка"></MenuItem>

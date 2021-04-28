@@ -683,8 +683,8 @@ namespace DBApp
             addButton.Visibility = Visibility.Visible;
 
             header1.Content = "Название";
-            header2.Content = "Дата начала (ГГГГ-ММ-ДД)";
-            header3.Content = "Дата окончания (ГГГГ-ММ-ДД)";
+            header2.Content = "Дата начала (ГГГГ.ММ.ДД)";
+            header3.Content = "Дата окончания (ГГГГ.ММ.ДД)";
  
             tabPanel.SelectedIndex = 1;
             tableTabs.SelectedIndex = 0;
@@ -715,6 +715,389 @@ namespace DBApp
             TableOutput("exec [dbo].[showPositions]", mainTable);
 
             selectVoid = AddPosition;
+        }
+        private void AddShift(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+            header3.Visibility = Visibility.Visible;
+
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+            add3.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Сотрудника *";
+            header2.Content = "Дата начала (ГГГГ.ММ.ДД ЧЧ:ММ) *";
+            header3.Content = "Дата окончания (ГГГГ.ММ.ДД ЧЧ:ММ) *";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[shifts] values(?,'?','?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Смены", Content = mainTable });
+            TableOutput("exec [dbo].[showShifts]", mainTable);
+
+            DataGrid workersTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Сотрудники", Content = workersTable });
+            TableOutput("exec [dbo].[showWorkersTable]", workersTable);
+
+            selectVoid = AddShift;
+
+        }
+        private void AddClub(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название кружка *";
+            header2.Content = "Краткое описание *";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[clubs] values('?','?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Кружки", Content = mainTable });
+            TableOutput("exec [dbo].[showClubs]", mainTable);
+
+            selectVoid = AddClub;
+        }
+        private void AddClubOrganizer(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Кружка *";
+            header2.Content = "ID Сотрудника *";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[clubs_organizers] values(?,?)";
+
+            tableTabs.Items.Add(new TabItem { Header = "Организаторы кружков", Content = mainTable });
+            TableOutput("exec [dbo].[showClubsOrganizers]", mainTable);
+
+            DataGrid workersTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Сотрудники", Content = workersTable });
+            TableOutput("exec [dbo].[showWorkersTable]", workersTable);
+
+            DataGrid clubsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Кружки", Content = clubsTable });
+            TableOutput("exec [dbo].[showClubs]", clubsTable);
+
+            selectVoid = AddClubOrganizer;
+        }
+        private void AddChildren(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+            header3.Visibility = Visibility.Visible;
+            header4.Visibility = Visibility.Visible;
+            header5.Visibility = Visibility.Visible;
+            header6.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+            add3.Visibility = Visibility.Visible;
+            add4.Visibility = Visibility.Visible;
+            add5.Visibility = Visibility.Visible;
+            add6.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Фамилия ребёнка *";
+            header2.Content = "Имя ребёнка *";
+            header3.Content = "Отчество ребёнка *";
+            header4.Content = "Номер телефона *";
+            header5.Content = "ID Отряда *";
+            header6.Content = "Номер документа *";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[children] values('?','?','?','?',?,'?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Дети", Content = mainTable });
+            TableOutput("exec [dbo].[showChildrenTable]", mainTable);
+
+            DataGrid squadsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Отряды", Content = squadsTable });
+            TableOutput("exec [dbo].[showSquadsTable]", squadsTable);
+
+            selectVoid = AddChildren;
+        }
+        private void AddChildrenToClub(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Ребёнка *";
+            header2.Content = "ID Кружка *";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[children_in_clubs] values(?,?)";
+
+            tableTabs.Items.Add(new TabItem { Header = "Дети в кружках", Content = mainTable });
+            TableOutput("exec [dbo].[showChildrenInClubs]", mainTable);
+
+            DataGrid clubsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Кружки", Content = clubsTable });
+            TableOutput("exec [dbo].[showClubs]", clubsTable);
+
+            DataGrid childrenTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Дети", Content = childrenTable });
+            TableOutput("exec [dbo].[showChildrenTable]", childrenTable);
+
+            selectVoid = AddChildrenToClub;
+        }
+        private void AddBenefitsToChildren(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Ребёнка *";
+            header2.Content = "ID Льготы *";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[children_benefits] values(?,?)";
+
+            tableTabs.Items.Add(new TabItem { Header = "Льготы детей", Content = mainTable });
+            TableOutput("exec [dbo].[showChildrenBenefitsTable]", mainTable);
+
+            DataGrid benefitsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Льготы", Content = benefitsTable });
+            TableOutput("exec [dbo].[showBenefits]", benefitsTable);
+
+            DataGrid childrenTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Дети", Content = childrenTable });
+            TableOutput("exec [dbo].[showChildrenTable]", childrenTable);
+
+            selectVoid = AddBenefitsToChildren;
+        }
+        private void AddBenefit(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название льготы";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[benefits] values('?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Льготы", Content = mainTable });
+            TableOutput("exec [dbo].[showBenefits]", mainTable);
+
+            selectVoid = AddBenefit;
+        }
+        private void AddEvent(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название события";
+            header2.Content = "Краткое описание";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[events] values('?','?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "События", Content = mainTable });
+            TableOutput("exec [dbo].[showEvents]", mainTable);
+
+            selectVoid = AddEvent;
+        }
+        private void AddCampEvent(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+            header3.Visibility = Visibility.Visible;
+            header4.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+            add3.Visibility = Visibility.Visible;
+            add4.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Группы лагерей *";
+            header2.Content = "ID События *";
+            header3.Content = "ID Группы организаторов *";
+            header4.Content = "Время (ГГГГ.ММ.ДД ЧЧ:ММ) *";
+
+            addButton.Visibility = Visibility.Visible;
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[camp_events] values(?,?,?,'?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "События", Content = mainTable });
+            TableOutput("exec [dbo].[showCampEvents]", mainTable);
+
+            DataGrid campGroupsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Группы лагерей", Content = campGroupsTable});
+            TableOutput("exec [dbo].[showCampGroups]", campGroupsTable);
+
+            DataGrid eventsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "События", Content = eventsTable });
+            TableOutput("exec [dbo].[showEvents]", eventsTable);
+
+            DataGrid organizersTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Организаторы", Content = organizersTable });
+            TableOutput("exec [dbo].[showEventOrganizers]", organizersTable);
+
+            selectVoid = AddCampEvent;
+        }
+        private void AddCampGroup(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название группы";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[camp_groups] values('?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Группы", Content = mainTable });
+            TableOutput("exec [dbo].[showGroups]", mainTable);
+
+
+            selectVoid = AddCampGroup;
+        }
+
+        private void AddGroupOfCamps(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Группы";
+            header2.Content = "ID Лагеря";
+
+            addButton.Visibility = Visibility.Visible;
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[groups_of_camps] values(?,?)";
+
+            tableTabs.Items.Add(new TabItem { Header = "Группы лагерей", Content = mainTable});
+            TableOutput("exec [dbo].[showCampGroups]", mainTable);
+
+            DataGrid campGroupsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Группы", Content = campGroupsTable });
+            TableOutput("exec [dbo].[showGroups]", campGroupsTable);
+
+            DataGrid campsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Лагеря", Content = campsTable });
+            TableOutput("exec [dbo].[showCampsTable]", campsTable);
+
+            selectVoid = AddGroupOfCamps;
+        }
+        private void AddOrganizersGroup(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название группы";
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[event_organizers] values('?')";
+
+            tableTabs.Items.Add(new TabItem { Header = "Группы", Content = mainTable });
+            TableOutput("exec [dbo].[showEventOrganizers]", mainTable);
+
+
+            selectVoid = AddOrganizersGroup;
+        }
+        private void AddGroupOfOrganizers(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+
+            header1.Content = "ID Группы";
+            header2.Content = "ID Сотрудника";
+
+            addButton.Visibility = Visibility.Visible;
+
+            tabPanel.SelectedIndex = 1;
+            tableTabs.SelectedIndex = 0;
+            insert.insertCommand = @"insert into [dbo].[groups_of_organizers] values(?,?)";
+
+            tableTabs.Items.Add(new TabItem { Header = "Группы лагерей", Content = mainTable });
+            TableOutput("exec [dbo].[showGroupsOfOrganizers]", mainTable);
+
+            DataGrid groupsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem { Header = "Группы", Content = groupsTable });
+            TableOutput("exec [dbo].[showEventOrganizers]", groupsTable);
+
+            DataGrid workersTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem {Header = "Сотрудники", Content = workersTable});
+            TableOutput("exec [dbo].[showWorkers]", workersTable);
+
+            selectVoid = AddGroupOfOrganizers;
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
