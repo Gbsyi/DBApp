@@ -53,6 +53,9 @@
             <MenuItem Header="Добавить">
                 <MenuItem Header="Сотрудника" Click="AddWorker"></MenuItem>
                 <MenuItem Header="Должность сотруднику" Click="AddWorkerPosition"></MenuItem>
+                <MenuItem Header="Лагерь">
+                    <MenuItem Header="Новый лагерь" Click="AddCamp"></MenuItem>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Справка"></MenuItem>
             <MenuItem Header="Смена пользователя" Click="ChangeAccount"></MenuItem>

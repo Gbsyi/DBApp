@@ -446,6 +446,9 @@ namespace DBApp
 
 
         //Добавление
+        delegate void Select(object sender, RoutedEventArgs e);
+        Select selectVoid;
+
         public void AddWorker(object sender, RoutedEventArgs e)
         {
             Refresh();
@@ -468,7 +471,14 @@ namespace DBApp
 
             tabPanel.SelectedIndex = 1;
             insert.insertCommand = @"insert into [dbo].[workers] values('?','?','?')";
-            TableOutput("exec [dbo].[showWorkers]");
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Сотрудники",
+                Content = mainTable
+            });
+            TableOutput("exec [dbo].[showWorkers]", mainTable);
+
+            selectVoid = AddWorker;
 
         }
         public void AddWorkerPosition(object sender, RoutedEventArgs e)
@@ -481,35 +491,106 @@ namespace DBApp
             header1.Visibility = Visibility.Visible;
             add1.Visibility = Visibility.Visible;
             
-            header2.Content = "Должность";
+            header2.Content = "ID Должности";
             header2.Visibility = Visibility.Visible;
             add2.Visibility = Visibility.Visible;
             
             addButton.Visibility = Visibility.Visible;
             
             tabPanel.SelectedIndex = 1;
+           
+            insert.insertCommand = @"insert into [dbo].[workers_position] values(?,?)";
+            
             tableTabs.Items.Add(new TabItem
             {
                 Header = "Должности сотрудников",
                 Content = mainTable
             });
             TableOutput("exec [dbo].[showWorkersTable]", mainTable);
-            DataGrid workersTable = new();
-            TableOutput("exec [dbo].[showWorkers]", workersTable);
+            
+            DataGrid workersTable = new() { IsReadOnly = true };
             tableTabs.Items.Add(new TabItem
             {
                 Header = "Сотрудники",
                 Content = workersTable
             });
+            TableOutput("exec [dbo].[showWorkers]", workersTable);
+
+            DataGrid positionsTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Сотрудники",
+                Content = positionsTable
+            });
+            TableOutput("exec [dbo].[showPositions]", positionsTable);
+
+            selectVoid = AddWorkerPosition;
         }
+        private void AddCamp(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+            addTitle.Visibility = Visibility.Visible;
+
+            header1.Visibility = Visibility.Visible;
+            header2.Visibility = Visibility.Visible;
+            header3.Visibility = Visibility.Visible;
+            header4.Visibility = Visibility.Visible;
+
+            add1.Visibility = Visibility.Visible;
+            add2.Visibility = Visibility.Visible;
+            add3.Visibility = Visibility.Visible;
+            add4.Visibility = Visibility.Visible;
+
+            addButton.Visibility = Visibility.Visible;
+
+            header1.Content = "Название лагеря";
+            header2.Content = "Описание";
+            header3.Content = "ID Директора";
+            header4.Content = "ID Управляющего";
+
+            tabPanel.SelectedIndex = 1;
+            insert.insertCommand = @"insert into [dbo].[camps] values('?','?',?,?)";
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Лагеря",
+                Content = mainTable
+            });
+            TableOutput("exec [dbo].[showCampsTable]", mainTable);
+            DataGrid directorsTable = new() { IsReadOnly = true};
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Директора",
+                Content = directorsTable
+            });
+            TableOutput("exec [dbo].[showWorkersWithChPos] 1", directorsTable);
+            DataGrid managersTable = new() { IsReadOnly = true };
+            tableTabs.Items.Add(new TabItem
+            {
+                Header = "Управляющие",
+                Content = managersTable
+            });
+            TableOutput("exec [dbo].[showWorkersWithChPos] 2", managersTable);
+
+            selectVoid = AddCamp;
+        }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if(add1.Text != "" && add2.Text != "" && add3.Text != ""){
+            if (add1.Text != "" 
+                && (add2.Text != "" || add2.Visibility == Visibility.Hidden) 
+                && (add3.Text != "" || add3.Visibility == Visibility.Hidden) 
+                && (add4.Text != "" || add4.Visibility == Visibility.Hidden)
+            )
+            {
                 List<string> vars = new();
 
                 vars.Add(add1.Text);
                 vars.Add(add2.Text);
                 vars.Add(add3.Text);
+                vars.Add(add4.Text);
+                vars.Add(add5.Text);
+                vars.Add(add6.Text);
+                vars.Add(add7.Text);
                 
 
                 insert.SetVars(vars);
@@ -524,16 +605,24 @@ namespace DBApp
 
                 add1.Clear();
                 add2.Clear();
-                add3.Clear();
+                add3.Clear(); 
+                add4.Clear();
+                add5.Clear();
+                add6.Clear();
+                add7.Clear();
+
                 TableOutput("exec [dbo].[showWorkers]");
             }
             else
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            selectVoid(sender, e);
         }
         
-            
+        
+        
         private void OnClose(object sender, CancelEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
