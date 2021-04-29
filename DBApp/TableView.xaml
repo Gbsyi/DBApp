@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
-        Title="Window1" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Loaded="TableViewLoaded" Closing="OnClose">
+        Title="Приложние" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Loaded="TableViewLoaded" Closing="OnClose">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -83,7 +83,6 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Справка"></MenuItem>
-            <MenuItem Header="Смена пользователя" Click="ChangeAccount"></MenuItem>
         </Menu>
         <TabControl Grid.Row="1" x:Name="tabPanel">
             <TabItem>
@@ -134,7 +133,7 @@
                     <DataGrid x:Name="table" Grid.Row="0" IsReadOnly="true"
                         ScrollViewer.CanContentScroll="True" 
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectionChanged="table_SelectionChanged">
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     </DataGrid>
                 </TabItem.Content>
             </TabItem>

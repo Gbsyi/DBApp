@@ -24,7 +24,6 @@ namespace DBApp
         public int choose;
         public string account { get; set; } = "";
         private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
-        private LoginPage login = new LoginPage();
         private Insert insert = new();
         //private int visiblePanels = 0;
         private DataGrid mainTable = new DataGrid() { IsReadOnly = true};
@@ -32,22 +31,9 @@ namespace DBApp
         {
             InitializeComponent();
             
-            login.Show();
         }
         //Мои методы
         
-        private void TableOutput(string sql)
-        {
-            using (SqlConnection conn = new SqlConnection(connection))
-            {
-                conn.Open();
-                SqlDataAdapter sda = new SqlDataAdapter(sql, conn);
-                DataSet ds = new DataSet();
-                sda.Fill(ds);
-                table.ItemsSource = ds.Tables[0].DefaultView;
-                conn.Close();
-            }
-        }
         private void TableOutput(string sql, DataGrid dataGrid)
         {
             using (SqlConnection conn = new SqlConnection(connection))
@@ -101,12 +87,6 @@ namespace DBApp
         //Методы, связанные с .xaml
         public void TableViewLoaded(object sender, RoutedEventArgs e)
         {
-            login.Owner = this;
-            this.Hide();
-        }
-        private void ChangeAccount(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
 
         }
        
@@ -1137,8 +1117,6 @@ namespace DBApp
                 add5.Clear();
                 add6.Clear();
                 add7.Clear();
-
-                TableOutput("exec [dbo].[showWorkers]");
             }
             else
             {
@@ -1153,11 +1131,6 @@ namespace DBApp
         private void OnClose(object sender, CancelEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
-        }
-
-        private void table_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
