@@ -31,6 +31,13 @@ namespace DBApp
             this.Hide();
             this.Owner.Show();
         }
+        private void OpenCounselorMenu(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Counselor counselor = new();
+            counselor.Show();
+            counselor.Owner = this;
+        }
         private void OnClose(object sender, CancelEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();

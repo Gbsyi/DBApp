@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <TextBlock x:Name="title" Grid.Column="1" Grid.Row="1" Text="Кто вы?" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Button x:Name="firstButton" Margin="0 5" Grid.Column="1" Grid.Row="2" Click="OpenMainMenu">Admin</Button>
-        <Button x:Name="secondButton" Margin="0 5" Grid.Column="1" Grid.Row="3">Кнопка 2</Button>
+        <Button x:Name="secondButton" Margin="0 5" Grid.Column="1" Grid.Row="3" Click="OpenCounselorMenu">Вожатый</Button>
         <Button x:Name="thirdButton" Margin="0 5" Grid.Column="1" Grid.Row="4">Кнопка 3</Button>
         <Button x:Name="fourthButton" Margin="0 5" Grid.Column="1" Grid.Row="5">Кнопка 4</Button>
 
