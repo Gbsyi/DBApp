@@ -16,11 +16,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1px"/>
             <RowDefinition Height="36px"/>
-            <RowDefinition Height="auto" x:Name="row"/>
+            <RowDefinition x:Name="row"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.ColumnSpan="3" Background="Gray"></Border>
         <Label Grid.Row="1" Padding="10 10 10 10">Выберите лагерь:</Label>
-        <ListBox Grid.Row="2" x:Name="camps" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="2" Margin="0,0,266,165">
+        <ListBox Grid.Row="2" x:Name="camps">
             <ListViewItem>Лагерь 1</ListViewItem>
             <ListViewItem>Лагерь 2</ListViewItem>
             <ListViewItem>Лагерь 3</ListViewItem>
