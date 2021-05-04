@@ -28,8 +28,11 @@ namespace DBApp
 
         private void OpenMainMenu(object sender, RoutedEventArgs e)
         {
+            TableView tableView = new TableView();
+            tableView.Owner = this;
+            tableView.Show();
             this.Hide();
-            this.Owner.Show();
+            
         }
         private void OpenCounselorMenu(object sender, RoutedEventArgs e)
         {

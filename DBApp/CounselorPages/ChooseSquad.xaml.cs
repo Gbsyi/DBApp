@@ -15,19 +15,19 @@ using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DBApp
+namespace DBApp.CounselorPages
 {
     /// <summary>
-    /// Логика взаимодействия для ChooseCampPage.xaml
+    /// Логика взаимодействия для ChooseSquad.xaml
     /// </summary>
-    public partial class ChooseCampPage : Page
+    public partial class ChooseSquad : UserControl
     {
-        private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
-        private DataSet campsDS = new DataSet();
-        public ChooseCampPage()
+        public ChooseSquad()
         {
             InitializeComponent();
         }
+        private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
+        private DataSet campsDS = new DataSet();
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             using (SqlConnection conn = new SqlConnection(connection))
@@ -41,7 +41,7 @@ namespace DBApp
                 {
                     campsList.Items.Add(campsDS.Tables["camps"].Rows[i].ItemArray[0]);
                 }
-                
+
             }
         }
         private void CampSelect(object sender, RoutedEventArgs e)

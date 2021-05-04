@@ -24,15 +24,14 @@ namespace DBApp
         public int choose;
         public string account { get; set; } = "";
         private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
-        private LoginPage login = new LoginPage();
         private Insert insert = new();
         //private int visiblePanels = 0;
         private DataGrid mainTable = new DataGrid() { IsReadOnly = true};
+        bool IsLogout = false;
+
         public TableView()
         {
             InitializeComponent();
-            
-            login.Show();
         }
         //Мои методы
         
@@ -101,12 +100,12 @@ namespace DBApp
         //Методы, связанные с .xaml
         public void TableViewLoaded(object sender, RoutedEventArgs e)
         {
-            login.Owner = this;
-            this.Hide();
+            
         }
         private void ChangeAccount(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            IsLogout = true;
+            this.Close();
 
         }
        
@@ -1147,12 +1146,19 @@ namespace DBApp
 
             selectVoid(sender, e);
         }
-        
-        
-        
+
+
+
         private void OnClose(object sender, CancelEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            if (IsLogout)
+            {
+                this.Owner.Show();
+            }
+            else
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
         }
 
         private void table_SelectionChanged(object sender, SelectionChangedEventArgs e)

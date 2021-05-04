@@ -14,20 +14,49 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Counselor" Height="450" Width="800" Closing="Window_Closing">
+        Title="Counselor" Height="700" Width="1200" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem x:Name="chooseCamp">
-                <MenuItem.Header>Сменить лагерь</MenuItem.Header>
-            </MenuItem>
-            <MenuItem x:Name="chooseSquad">
+            <MenuItem x:Name="chooseSquad" Click="chooseSquad_Click">
                 <MenuItem.Header>Сменить отряд</MenuItem.Header>
             </MenuItem>
+
+            <MenuItem Header="Сменить пользователя" Click="ChangeUser"></MenuItem>
         </Menu>
-        <Frame Grid.Row="1" x:Name="page" NavigationUIVisibility="Automatic" Source="/CounselorPages/ChooseCampPage.xaml"></Frame>
+        <!--<Frame Grid.Row="1" x:Name="page" NavigationUIVisibility="Automatic" Source="/CounselorPages/ChooseCampPage.xaml"></Frame>-->
+        <materialDesign:DialogHost x:Name="chooseCampModal" Grid.Row="1">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Width="600" Height="350">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1px"/>
+                        <RowDefinition Height="36px"/>
+                        <RowDefinition x:Name="row"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.ColumnSpan="3" Background="Gray"></Border>
+                    <Label Grid.Row="1" Padding="10 10 10 10" >Выберите лагерь:</Label>
+                    <ListBox Grid.Row="2" x:Name="campsList" >
+                    </ListBox>
+                    <Label Grid.Row="1" Grid.Column="1" Padding="10 10 10 10">Выберите отряд:</Label>
+                    <ListBox Grid.Row="2" Grid.Column="1" x:Name="squadsList" Visibility="Hidden">
+                    </ListBox>
+                    <DockPanel Grid.Column="2" Grid.Row="2" Visibility="Hidden" x:Name="resultPanel">
+                        <Label DockPanel.Dock="Top" Margin="10" x:Name="chosenCamp">Выбранный лагерь:</Label>
+                        <Label DockPanel.Dock="Top" Margin="10" x:Name="chosenSquad">Выбранный отряд:</Label>
+                        <Button DockPanel.Dock="Bottom" Margin="10" Cursor="Hand" Click="Apply">Применить</Button>
+                        <Label></Label>
+                    </DockPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+            <Label x:Name="label"></Label>
+        </materialDesign:DialogHost>
     </Grid>
 </Window>
