@@ -14,17 +14,21 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Counselor" Height="700" Width="1200" Closing="Window_Closing" Loaded="Window_Loaded">
+        Title="Counselor" Height="500" Width="900" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
+            <MenuItem Header="Мой отряд">
+                <MenuItem Click="GetTodaySchedule" Header="Сегодняшее расписание"></MenuItem>
+                <MenuItem Click="ShowChildren" Header="Список детей"></MenuItem>
+            </MenuItem>
             <MenuItem x:Name="chooseSquad" Click="chooseSquad_Click">
                 <MenuItem.Header>Сменить отряд</MenuItem.Header>
             </MenuItem>
-
+            
             <MenuItem Header="Сменить пользователя" Click="ChangeUser"></MenuItem>
         </Menu>
         <!--<Frame Grid.Row="1" x:Name="page" NavigationUIVisibility="Automatic" Source="/CounselorPages/ChooseCampPage.xaml"></Frame>-->
@@ -56,7 +60,19 @@
                     </DockPanel>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
-            <Label x:Name="label"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel x:Name="leftPanel" Grid.Column="0">
+                </StackPanel>
+                <StackPanel x:Name="rightPanel" Grid.Column="1" >
+                </StackPanel>
+            </Grid>
         </materialDesign:DialogHost>
     </Grid>
 </Window>
