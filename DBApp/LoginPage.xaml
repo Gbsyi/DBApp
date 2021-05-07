@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
-        Title="Авторизация" Height="250" Width="300" WindowStartupLocation="CenterScreen" Closing="OnClose">
+        Title="Авторизация" Height="250" Width="300" WindowStartupLocation="CenterScreen" Closing="OnClose" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -24,7 +24,7 @@
         <TextBlock x:Name="title" Grid.Column="1" Grid.Row="1" Text="Кто вы?" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Button x:Name="firstButton" Margin="0 5" Grid.Column="1" Grid.Row="2" Click="OpenMainMenu">Admin</Button>
         <Button x:Name="secondButton" Margin="0 5" Grid.Column="1" Grid.Row="3" Click="OpenCounselorMenu">Вожатый</Button>
-        <Button x:Name="thirdButton" Margin="0 5" Grid.Column="1" Grid.Row="4">Кнопка 3</Button>
+        <Button x:Name="thirdButton" Margin="0 5" Grid.Column="1" Grid.Row="4" Click="OpenHRWindow" Cursor="Hand">Отдел кадров</Button>
         <Button x:Name="fourthButton" Margin="0 5" Grid.Column="1" Grid.Row="5">Кнопка 4</Button>
 
     </Grid>

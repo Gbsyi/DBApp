@@ -84,11 +84,13 @@ namespace DBApp
             selectedCamp = camp.SelectedIndex;
             chosenCamp.Content = $"Выбранный лагерь: {camp.SelectedItem}";
             squadsList.Visibility = Visibility.Visible;
+            squadsList.Items.Clear();
             //Заполнение отрядами
             using (SqlConnection conn = new SqlConnection(connection))
             {
                 conn.Open();
                 SqlDataAdapter sda = new SqlDataAdapter($"select [name], [id] from [dbo].[squads] where [squads].[camp_id] = {workDS.Tables["camps"].Rows[camp.SelectedIndex].ItemArray[1]}", conn);
+                workDS.Tables["squads"]?.Clear();
                 sda.Fill(workDS, "squads");
                 squadsList.SelectionChanged += new SelectionChangedEventHandler(SquadSelect);
                 for (int i = 0; i < workDS.Tables["squads"].Rows.Count; i++)
@@ -107,8 +109,7 @@ namespace DBApp
         {
             workDS.Clear();
             IsLogout = true;
-            this.Close();
-            
+            this.Close();   
         }
         private void Apply(object sender, RoutedEventArgs e)
         {

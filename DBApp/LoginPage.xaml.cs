@@ -45,5 +45,13 @@ namespace DBApp
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void OpenHRWindow(object sender, RoutedEventArgs e)
+        {
+            HRWindow hr = new HRWindow();
+            hr.Owner = this;
+            hr.Show();
+            this.Hide();
+        }
     }
 }

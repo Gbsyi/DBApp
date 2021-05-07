@@ -31,7 +31,6 @@
             
             <MenuItem Header="Сменить пользователя" Click="ChangeUser"></MenuItem>
         </Menu>
-        <!--<Frame Grid.Row="1" x:Name="page" NavigationUIVisibility="Automatic" Source="/CounselorPages/ChooseCampPage.xaml"></Frame>-->
         <materialDesign:DialogHost x:Name="chooseCampModal" Grid.Row="1">
             <materialDesign:DialogHost.DialogContent>
                 <Grid Width="600" Height="350">
