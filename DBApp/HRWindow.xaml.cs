@@ -25,6 +25,7 @@ namespace DBApp
         private DataSet workDS = new DataSet();
         private bool IsLogout = false;
         private bool IsNewWorker = false;
+        private string workerName;
 
         private int workerId = 0;
 
@@ -88,34 +89,6 @@ namespace DBApp
             plusButton.Visibility = Visibility.Hidden;
             rightPanel.Children.Clear();
             leftPanel.Children.Clear();
-            //Нерабочая хрень
-            /*DataGrid workers = new() { IsReadOnly = true };
-            rightPanel.Children.Add(workers);
-            using (SqlConnection conn = new SqlConnection(connection))
-            {
-                conn.Open();
-                //Вывод сотрудников
-                SqlDataAdapter sda = new SqlDataAdapter("exec showWorkers", conn);
-                workDS.Tables["workers"]?.Clear();
-                sda.Fill(workDS, "workers");
-                //Вывод их должностей
-                DataTable dt = workDS.Tables["workers"];
-                dt.Columns.Add("Должность", typeof(ComboBox));
-                for ( int i = 0; i < workDS.Tables["workers"].Rows.Count; i++){
-                    sda = new SqlDataAdapter($"exec [dbo].[getWorkerPositions] {workDS.Tables["workers"].Rows[i].ItemArray[0]}", conn);
-                    DataSet ds = new DataSet();
-                    sda.Fill(ds, "positions");
-                    ComboBox workerPosition = new();
-                    for(int j = 0; j < ds.Tables["positions"].Rows.Count; j++)
-                    {
-                        workerPosition.Items.Add(ds.Tables["positions"].Rows[j].ItemArray[0].ToString());
-                    }
-                    dt.Rows[i].ItemArray[4] = new ComboBox { Items = { "1", "2" } };//workerPosition;
-                }
-                workers.ItemsSource = dt.DefaultView;
-
-                conn.Close();
-            }*/
 
             ListBox workers = new() { Margin = new Thickness(10, 0, 0, 0) };
             workers.SelectionChanged += new SelectionChangedEventHandler(WorkerSelected);
@@ -156,6 +129,7 @@ namespace DBApp
 
             ListBox workersList = (ListBox)sender;
             workerId = int.Parse(workDS.Tables["workers"].Rows[workersList.SelectedIndex].ItemArray[0].ToString());
+            workerName = $"{workDS.Tables["workers"].Rows[workersList.SelectedIndex].ItemArray[1]} {workDS.Tables["workers"].Rows[workersList.SelectedIndex].ItemArray[2]} {workDS.Tables["workers"].Rows[workersList.SelectedIndex].ItemArray[3]}";
             ListBox positionsList = new() { Margin = new Thickness(5, 0, 0, 0) };
             Label label = new() { Content = "Должности", FontWeight = FontWeights.Bold, Margin = new Thickness(5, 5, 0, 0) };
             rightPanel.Children.Add(label);
@@ -232,9 +206,6 @@ namespace DBApp
                     SqlCommand com = new SqlCommand(command, conn);
                     com.ExecuteNonQuery();
                 }
-                /*string command = $"insert into [dbo].[workers_position] values({workerId},{positionTB})";
-                SqlCommand com = new SqlCommand(command, conn);
-                com.ExecuteNonQuery();*/
                 conn.Close();
             }
             addPositionDialog.IsOpen = false;
@@ -265,7 +236,7 @@ namespace DBApp
         {
             ShiftsWindow shifts = new();
             shifts.WorkerId = workerId;
-            shifts.WorkerName = $"";
+            shifts.WorkerName = workerName;
             shifts.Owner = this;
             shifts.Show();
         }

@@ -45,7 +45,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Margin="0 10 2.5 0" Click="CloseDialog">Отмена</Button>
+                        <Button Grid.Column="0" Margin="0 10 2.5 0" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Отмена</Button>
                         <Button Grid.Column="1" Margin="2.5 10 0 0" Click="SavePosition">Сохранить</Button>
                     </Grid>
                 </DockPanel>
@@ -74,7 +74,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Margin="0 10 2.5 0" Click="CloseDialog">Отмена</Button>
+                            <Button Grid.Column="0" Margin="0 10 2.5 0" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Отмена</Button>
                             <Button Grid.Column="1" Margin="2.5 10 0 0" Click="SaveWorker">Сохранить</Button>
                         </Grid>
                     </DockPanel>

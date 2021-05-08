@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="ShiftsWindow" Height="400" Width="300" Loaded="Window_Loaded">
+        Title="ShiftsWindow" Height="515" Width="350" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,32 +22,125 @@
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
-        <Label DockPanel.Dock="Top" Padding="5" x:Name="workerLabel">Сотрудник: А А А</Label>
-        <Grid>
-        <DataGrid x:Name="table"></DataGrid>
-        <materialDesign:PopupBox
-            x:Name="plusButton"
-            Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-            PlacementMode="TopAndAlignCentres"
-            ToolTipService.Placement="Right"
-            ToolTip="Управление" Margin="0,0,10,10" Grid.Column="1" HorizontalAlignment="Right" Width="56" Height="56" VerticalAlignment="Bottom" Cursor="Hand">
-            <StackPanel>
-                <Button
-                   
-                    ToolTip="Добавить должность">
-                    <materialDesign:PackIcon Kind="AccountHardHat"/>
-                </Button>
-                <Button
-                    
-                    ToolTip="Расписание сотрудника">
-                    <materialDesign:PackIcon Kind="Notebook" />
-                </Button>
-                <Button
-                    ToolTip="Добавить сотрудника">
-                    <materialDesign:PackIcon Kind="AccountPlus" />
-                </Button>
-            </StackPanel>
-        </materialDesign:PopupBox>
-        </Grid>
+        <ToolBar DockPanel.Dock="Top" Height="35"
+                 
+                 Style="{DynamicResource MaterialDesignToolBar}">
+            <Button Content="{materialDesign:PackIcon Kind=CalendarPlus}" Click="ShowAddShiftDialog" Visibility="Visible" Padding="5" ToolTip="Добавить смену"></Button>
+            <Button Content="{materialDesign:PackIcon Kind=Filter}" Padding="5" Click="ShowFilterDialog" ToolTip="Фильтр"></Button>
+        </ToolBar>
+        <Label DockPanel.Dock="Top" Height="1" BorderBrush="DarkGray" BorderThickness="1"></Label>
+        <materialDesign:DialogHost x:Name="ShiftsDialog">
+            <materialDesign:DialogHost.DialogContent>
+                <DockPanel Width="250">
+                    <Label FontWeight="Bold" HorizontalContentAlignment="Center" DockPanel.Dock="Top" FontSize="15" Margin="7">Добавление смены</Label>
+                    <Label DockPanel.Dock="Top" Height="1" BorderBrush="DarkGray" BorderThickness="1" Margin="0 0 0 4"></Label>
+                    <DatePicker DockPanel.Dock="Top" Margin="8 10 8 0"
+                                Padding="10"
+                                Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                VerticalAlignment="Top"
+                                MaxWidth="400"
+                                materialDesign:HintAssist.Hint="Дата начала смены"
+                                x:Name="BeginAddDate"></DatePicker>
+                    <materialDesign:TimePicker DockPanel.Dock="Top" Margin="8 7 8 0"
+                                               Is24Hours="True"
+                                               Padding="10"
+                                               Grid.Column="5"
+                                               Grid.Row="4"
+                                               Style="{StaticResource MaterialDesignOutlinedTimePicker}" 
+                                               materialDesign:HintAssist.Hint="Время начала смены"
+                                               x:Name="BeginAddTime"/>
+                    <DatePicker DockPanel.Dock="Top" Margin="8 7 8 0"
+                                Padding="10"
+                                Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                VerticalAlignment="Top"
+                                MaxWidth="400"
+                                materialDesign:HintAssist.Hint="Дата окончания смены"
+                                x:Name="EndAddDate"></DatePicker>
+                    <materialDesign:TimePicker DockPanel.Dock="Top" Margin="8 7 8 0"
+                                               Is24Hours="True"
+                                               Padding="10"
+                                               Grid.Column="5"
+                                               Grid.Row="4"
+                                               Style="{StaticResource MaterialDesignOutlinedTimePicker}" 
+                                               materialDesign:HintAssist.Hint="Время окончания смены"
+                                               x:Name="EndAddTime"/>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Margin="8 0 2.5 10" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Отменить</Button>
+                        <Button Grid.Column="2" Margin="2.5 0 8 10" Click="AddShift">Сохранить</Button>
+                    </Grid>
+                    <Label DockPanel.Dock="Top"></Label>
+                </DockPanel>
+            </materialDesign:DialogHost.DialogContent>
+            <materialDesign:DialogHost x:Name="FilterDialog">
+                <materialDesign:DialogHost.DialogContent>
+                    <DockPanel Width="260">
+                        <Label FontWeight="Bold" HorizontalContentAlignment="Center" DockPanel.Dock="Top" FontSize="15" Margin="7">Фильтр</Label>
+                        <Label DockPanel.Dock="Top" Height="1" BorderBrush="DarkGray" BorderThickness="1" Margin="0 0 0 4"></Label>
+                        <Label DockPanel.Dock="Top" Margin="8 2 0 0" FontWeight="Bold">От</Label>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <DatePicker Margin="8 4 4 0"
+                                        materialDesign:TextFieldAssist.HasClearButton="True"
+                                        Padding="10"
+                                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                        VerticalAlignment="Top"
+                                        MaxWidth="150"
+                                        Width="125"
+                                        materialDesign:HintAssist.Hint="Дата"
+                                        x:Name="BeginFilterDate"></DatePicker>
+                            <materialDesign:TimePicker  Margin="4 4 0 0"
+                                                        materialDesign:TextFieldAssist.HasClearButton="True"
+                                                        Width="110"        
+                                                        Is24Hours="True"
+                                                        Padding="10"
+                                                        Grid.Column="5"
+                                                        Grid.Row="4"
+                                                        Style="{StaticResource MaterialDesignOutlinedTimePicker}" 
+                                                        materialDesign:HintAssist.Hint="Время"
+                                                        x:Name="BeginFilterTime"/>
+                        </StackPanel>
+                        <Label DockPanel.Dock="Top" Margin="8 2 0 0" FontWeight="Bold">До</Label>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <DatePicker Margin="8 4 4 0"
+                                        materialDesign:TextFieldAssist.HasClearButton="True"
+                                        Padding="10"
+                                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                        VerticalAlignment="Top"
+                                        MaxWidth="150"
+                                        Width="125"
+                                        materialDesign:HintAssist.Hint="Дата"
+                                        x:Name="EndFilterDate"></DatePicker>
+                            <materialDesign:TimePicker  Margin="4 4 0 0"
+                                                        materialDesign:TextFieldAssist.HasClearButton="True"
+                                                        Width="110"        
+                                                        Is24Hours="True"
+                                                        Padding="10"
+                                                        Grid.Column="5"
+                                                        Grid.Row="4"
+                                                        Style="{StaticResource MaterialDesignOutlinedTimePicker}" 
+                                                        materialDesign:HintAssist.Hint="Время"
+                                                        x:Name="EndFilterTime"/>
+                        </StackPanel>
+                        <Grid DockPanel.Dock="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Margin="8 0 2.5 10" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Отменить</Button>
+                            <Button Grid.Column="2" Margin="2.5 0 8 10" Click="ApplyFilter">Применить</Button>
+                        </Grid>
+                        <Label DockPanel.Dock="Top"></Label>
+                    </DockPanel>
+                </materialDesign:DialogHost.DialogContent>
+                <StackPanel>
+                    <Label DockPanel.Dock="Top" Padding="5" Margin="0 5 0 5" x:Name="WorkerLabel" HorizontalAlignment="Center" FontWeight="Bold">Сотрудник: Иванов Иван Иванович</Label>
+                    <DataGrid x:Name="table" IsReadOnly="True">
+                    </DataGrid>
+                </StackPanel>
+            </materialDesign:DialogHost>
+        </materialDesign:DialogHost>
     </DockPanel>
 </Window>

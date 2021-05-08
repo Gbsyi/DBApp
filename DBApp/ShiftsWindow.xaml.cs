@@ -29,7 +29,7 @@ namespace DBApp
         {
             InitializeComponent();
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void UpdateTable()
         {
             using (SqlConnection conn = new SqlConnection(connection))
             {
@@ -43,5 +43,66 @@ namespace DBApp
                 conn.Close();
             }
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            WorkerLabel.Content = $"Сотрудник: {WorkerName}";
+            UpdateTable();
+        }
+        private void ShowAddShiftDialog(object sender, RoutedEventArgs e)
+        {
+            ShiftsDialog.IsOpen = true;
+        }
+        private void ApplyFilter(object sender, RoutedEventArgs e)
+        {
+            if (BeginFilterDate.Text != "")
+            {
+                string beginDateTime = $"{BeginFilterDate.Text} {BeginFilterTime.Text}";
+                string endDateTime = $"{EndFilterDate.Text} {EndFilterTime.Text}";
+                using (SqlConnection conn = new SqlConnection(connection))
+                {
+                    conn.Open();
+                    string command;
+                    string t = endDateTime.Replace(" ", "");
+                    if (t == "")
+                    {
+                        command = $"exec [dbo].[showShiftsFiltered] \'{WorkerId}\', \'{beginDateTime}\'";
+                    }
+                    else
+                    {
+                        command = $"exec [dbo].[showShiftsFiltered] \'{WorkerId}\', \'{beginDateTime}\',\'{endDateTime}\'";
+                    }
+                    SqlDataAdapter sda = new SqlDataAdapter(command, conn);
+                    DataSet WorkDS = new();
+                    sda.Fill(WorkDS, "schedule");
+                    table.ItemsSource = WorkDS.Tables["schedule"].DefaultView;
+                    conn.Close();
+                }
+                FilterDialog.IsOpen = false;
+            }
+            else
+            {
+                
+            }
+        }
+        private void ShowFilterDialog(object sender, RoutedEventArgs e)
+        {
+            FilterDialog.IsOpen = true;
+        }
+        private void AddShift(object sender, RoutedEventArgs e)
+        {
+            string beginDateTime = $"{BeginAddDate.Text} {BeginAddTime.Text}";
+            string endDateTime = $"{BeginAddDate.Text} {BeginAddTime.Text}";
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                conn.Open();
+                string command = $"exec [dbo].[addShift] \'{WorkerId}\', \'{beginDateTime}\',\'{endDateTime}\'";
+                SqlCommand com = new(command, conn);
+                com.ExecuteNonQuery();
+                conn.Close();
+            }
+            UpdateTable();
+            ShiftsDialog.IsOpen = false;
+        }
+
     }
 }
