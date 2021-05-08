@@ -24,9 +24,13 @@ namespace DBApp
         private string connection = @"Data Source=GBSYIPC\SQLEXPRESS;Initial Catalog=Lager;Integrated Security=True";
         private DataSet workDS = new DataSet();
         private bool IsLogout = false;
+        private bool IsNewWorker = false;
 
-        private int workerId;
+        private int workerId = 0;
 
+        RoutedEventHandler workerSelectedDelegate;
+        object workerSelectedSender;
+        RoutedEventArgs workerSelectedArgs;
         public HRWindow()
         {
             InitializeComponent();
@@ -38,7 +42,7 @@ namespace DBApp
         /// </summary>
         /// <param name="position"></param>
         /// <returns>Наличие должности</returns>
-        private int IsPosition(string position) 
+        private int GetPositionID(string position) 
         {
             int returnValue;
             using (SqlConnection conn = new SqlConnection(connection))
@@ -62,7 +66,10 @@ namespace DBApp
             IsLogout = true;
             this.Close();
         }
-
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ShowWorkers(sender, e);
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (IsLogout)
@@ -132,7 +139,14 @@ namespace DBApp
                 }
                 conn.Close();
             }
-
+            if (IsNewWorker)
+            {
+                workers.SelectedIndex = workers.Items.Count - 1;
+            }
+            else { 
+                workers.SelectedIndex = 0;
+            }
+            IsNewWorker = false;
         }
 
         private void WorkerSelected(object sender, RoutedEventArgs e)
@@ -174,36 +188,87 @@ namespace DBApp
                     });
                 }
             }
+            
+            workerSelectedDelegate += WorkerSelected;
+            workerSelectedSender = sender;
+            workerSelectedArgs = e;
         }
 
         private void AddPosition(object sender, RoutedEventArgs e)
         {
             addPositionDialog.IsOpen = true;
         }
+        private void AddWorker(object sender, RoutedEventArgs e)
+        {
+            addWorkerDialog.IsOpen = true;
+        }
         private void CloseDialog(object sender, RoutedEventArgs e)
         {
             addPositionDialog.IsOpen = false;
+            addWorkerDialog.IsOpen = false;
         }
         private void SavePosition(object sender, RoutedEventArgs e)
         {
             using (SqlConnection conn = new SqlConnection(connection))
             {
                 conn.Open();
-                int posId = IsPosition(positionTB.Text);
+                int posId = GetPositionID(positionTB.Text);
                 if (posId == -1)
                 {
                     //Добавить новую
+                    string command = $"exec [dbo].[insertPosition] \'{positionTB.Text}\'";
+                    SqlDataAdapter sda = new SqlDataAdapter(command, conn);
+                    DataSet ds = new();
+                    sda.Fill(ds);
+                    posId = int.Parse(ds.Tables[0].Rows[0].ItemArray[0].ToString());
+                    command = $"insert into [dbo].[workers_position] values({workerId}, {posId})";
+                    SqlCommand com = new SqlCommand(command, conn);
+                    com.ExecuteNonQuery();
                 }
                 else
                 {
                     //Добавить имеющуюся
+                    string command = $"insert into [dbo].[workers_position] values({workerId}, {posId})";
+                    SqlCommand com = new SqlCommand(command, conn);
+                    com.ExecuteNonQuery();
                 }
                 /*string command = $"insert into [dbo].[workers_position] values({workerId},{positionTB})";
                 SqlCommand com = new SqlCommand(command, conn);
                 com.ExecuteNonQuery();*/
                 conn.Close();
             }
+            addPositionDialog.IsOpen = false;
+            workerSelectedDelegate?.Invoke(workerSelectedSender, workerSelectedArgs);
         }
 
+        private void SaveWorker(object sender, RoutedEventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connection))
+            {
+                conn.Open();
+                if (workerSurnameTB.Text != ""
+                   && workerNameTB.Text != ""
+                   && workerFathersNameTB.Text != "")
+                {
+                    string command = $"exec [dbo].[insertWorker] \'{workerSurnameTB.Text}\', \'{workerNameTB.Text}\', \'{workerFathersNameTB.Text}\'";
+                    SqlCommand com = new SqlCommand(command, conn);
+                    com.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+            IsNewWorker = true;
+            addWorkerDialog.IsOpen = false;
+            ShowWorkers(sender, e);
+        }
+
+        private void ShowSchedule(object sender, RoutedEventArgs e)
+        {
+            ShiftsWindow shifts = new();
+            shifts.WorkerId = workerId;
+            shifts.WorkerName = $"";
+            shifts.Owner = this;
+            shifts.Show();
+        }
+        
     }
 }
