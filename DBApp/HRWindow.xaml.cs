@@ -240,6 +240,11 @@ namespace DBApp
             shifts.Owner = this;
             shifts.Show();
         }
-        
+        private void OpenClubsWindow(object sender, RoutedEventArgs e)
+        {
+            ClubsWindow window = new();
+            window.Owner = this;
+            window.Show();
+        }
     }
 }

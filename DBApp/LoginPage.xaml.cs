@@ -53,5 +53,12 @@ namespace DBApp
             hr.Show();
             this.Hide();
         }
+        private void OpenEventsWindow(object sender, RoutedEventArgs e)
+        {
+            CampsWindow cw = new();
+            cw.Owner = this;
+            cw.Show();
+            this.Hide();
+        }
     }
 }

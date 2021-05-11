@@ -28,6 +28,7 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
+            <MenuItem Header="Кружки" Click="OpenClubsWindow"></MenuItem>
             <MenuItem Header="Сменить пользователя" Click="ChangeUser"></MenuItem>
         </Menu>
     
