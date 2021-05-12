@@ -5,8 +5,220 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
-        Title="Отряды" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Отряды" Height="500" Width="800" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 0 1">
+            <MenuItem Header="Вернуться в меню" Click="ChangeUser"></MenuItem>
+        </Menu>
+        <materialDesign:DialogHost Grid.Row="1" x:Name="AddHouseDialog">
+            <materialDesign:DialogHost.DialogContent>
+                <DockPanel>
+                    <Label DockPanel.Dock="Top" FontWeight="Bold" 
+                               HorizontalAlignment="Center"
+                               Margin="7 7 7 3">Новый корпус</Label>
+                    <Separator DockPanel.Dock="Top"/>
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 DockPanel.Dock="Top"
+                                 Margin="7 8 7 11"
+                                 Padding="6"
+                                 MaxLength="20"
+                                 materialDesign:HintAssist.Hint="Название корпуса"
+                                 x:Name="HouseName"/>
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 DockPanel.Dock="Top"
+                                 Margin="7 8 7 11"
+                                 Padding="6"
+                                 MaxLength="20"
+                                 materialDesign:HintAssist.Hint="Количество комнат"
+                                 x:Name="NumRooms"/>
+                    <Grid DockPanel.Dock="Bottom" Margin="0  7 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <!--Кнопки для добавления Корпуса-->
+                        <Button Grid.Column="0" Margin="7 0 3.5 5" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Назад</Button>
+                        <Button Grid.Column="1" Margin="3.5 0 7 5" Click="AddNewHouse">Добавить</Button>
+                    </Grid>
+                </DockPanel>
+            </materialDesign:DialogHost.DialogContent>
+            <materialDesign:DialogHost x:Name="AddSeasonDialog">
+                <materialDesign:DialogHost.DialogContent>
+                    <DockPanel>
+                        <Label DockPanel.Dock="Top" FontWeight="Bold" 
+                               HorizontalAlignment="Center"
+                               Margin="7 7 7 3">Новый сезон</Label>
+                        <Separator DockPanel.Dock="Top"/>
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 DockPanel.Dock="Top"
+                                 Margin="7 8 7 11"
+                                 Padding="6"
+                                 MaxLength="20"
+                                 materialDesign:HintAssist.Hint="Название сезона"
+                                 x:Name="SeasonName"/>
+                        <DatePicker DockPanel.Dock="Top"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    Margin="7 5"
+                                    Padding="6"
+                                    materialDesign:HintAssist.Hint="Начало сезона"
+                                    x:Name="SeasonBegin"></DatePicker>
+                        <DatePicker DockPanel.Dock="Top"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    Margin="7 5"
+                                    Padding="6"
+                                    materialDesign:HintAssist.Hint="Конец сезона"
+                                    x:Name="SeasonEnd"></DatePicker>
+                        <Grid DockPanel.Dock="Bottom" Margin="0  7 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <!--Кнопки для добавления сезона-->
+                            <Button Grid.Column="0" Margin="7 0 3.5 5" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Назад</Button>
+                            <Button Grid.Column="1" Margin="3.5 0 7 5" Click="AddSeason">Добавить</Button>
+                        </Grid>
+                    </DockPanel>
+                </materialDesign:DialogHost.DialogContent>
+                <!--Добавление отряда-->
+                <materialDesign:DialogHost x:Name="AddSquadDialog">
+                    <materialDesign:DialogHost.DialogContent>
+                        <DockPanel Width="300">
+                            <Label DockPanel.Dock="Top" FontWeight="Bold" 
+                                   HorizontalAlignment="Center"
+                                   Margin="7">Добавление отряда</Label>
+                            <Separator DockPanel.Dock="Top"/>
+                            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     DockPanel.Dock="Top"
+                                     Margin="7 8"
+                                     Padding="6"
+                                     MaxLength="20"
+                                     materialDesign:HintAssist.Hint="Название отряда"
+                                     x:Name="SquadNameTB"/>
+                            <ComboBox DockPanel.Dock="Top"
+                                      Margin="7 8"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      Padding="6"
+                                      materialDesign:HintAssist.Hint="Лагерь"
+                                      x:Name="CampComboBox"/>
+                            <ComboBox DockPanel.Dock="Top"
+                                      Margin="7 8"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      Padding="6"
+                                      materialDesign:HintAssist.Hint="Вожатый"
+                                      x:Name="CounselorComboBox"/>
+                            <ComboBox DockPanel.Dock="Top"
+                                    Margin="7 8"
+                                    Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                    Padding="6"
+                                    materialDesign:HintAssist.Hint="Старший вожатый"
+                                    x:Name="SeniorCounselorComboBox"/>
+                            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     DockPanel.Dock="Top"
+                                     Margin="7 8"
+                                     Padding="6"
+                                     MaxLength="20"
+                                     materialDesign:HintAssist.Hint="Сезон"
+                                     x:Name="SeasonTextBox"/>
+                            <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     DockPanel.Dock="Top"
+                                     Margin="7 8"
+                                     Padding="6"
+                                     MaxLength="20"
+                                     materialDesign:HintAssist.Hint="Корпус"
+                                     x:Name="HouseTextBox"/>
+                            <Grid DockPanel.Dock="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <!--Кнопки для добавления отряда-->
+                                <Button Grid.Column="0" Margin="7 0 3.5 5" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Закрыть</Button>
+                                <Button Grid.Column="1" Margin="3.5 0 7 5" Click="AddSquad">Добавить</Button>
+                            </Grid>
+                            <Label></Label>
+                        </DockPanel>
+                    </materialDesign:DialogHost.DialogContent>
+                    <materialDesign:DialogHost x:Name="AddCampDialog">
+                        <materialDesign:DialogHost.DialogContent>
+                            <DockPanel Width="300">
+                                <Label DockPanel.Dock="Top" FontWeight="Bold" 
+                                   HorizontalAlignment="Center"
+                                   Margin="7">Добавление лагеря</Label>
+                                <Separator DockPanel.Dock="Top"/>
+                                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     DockPanel.Dock="Top"
+                                     Margin="7 10"
+                                     Padding="6"
+                                     MaxLength="20"
+                                     materialDesign:HintAssist.Hint="Название лагеря"
+                                     x:Name="CampNameTB"/>
+                                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     DockPanel.Dock="Top"
+                                     Margin="7 10"
+                                     Padding="6"
+                                     MaxLength="100"
+                                     materialDesign:HintAssist.Hint="Описание лагеря"
+                                     TextWrapping="Wrap"
+                                     x:Name="CampDescriptionTB"/>
+                                <ComboBox DockPanel.Dock="Top"
+                                      Margin="7 10"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      Padding="6"
+                                      materialDesign:HintAssist.Hint="Директор"
+                                      x:Name="DirectorComboBox"/>
+                                <ComboBox DockPanel.Dock="Top"
+                                      Margin="7 10"
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      Padding="6"
+                                      materialDesign:HintAssist.Hint="Управляющий"
+                                      x:Name="ManagerComboBox"/>
+                                <Grid DockPanel.Dock="Bottom">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!--Кнопки для добавления лагеря-->
+                                    <Button Grid.Column="0" Margin="7 0 3.5 5" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Закрыть</Button>
+                                    <Button Grid.Column="1" Margin="3.5 0 7 5" Click="AddCamp">Добавить</Button>
+                                </Grid>
+                                <Label></Label>
+                            </DockPanel>
+                        </materialDesign:DialogHost.DialogContent>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <DockPanel Grid.Column="0">
+                                <Label DockPanel.Dock="Top" HorizontalAlignment="Center" FontWeight="Bold" Margin="7">Лагеря</Label>
+                                <Button DockPanel.Dock="Bottom" x:Name="AddCampButton" Click="OpenAddCampDialog"
+                                        Margin="7">Новый лагерь</Button>
+                                <ListBox x:Name="CampsListBox" Margin="7"></ListBox>
+                            </DockPanel>
+                            <DockPanel Grid.Column="1">
+                                <Label DockPanel.Dock="Top" HorizontalAlignment="Center" FontWeight="Bold" Margin="7">Отряды</Label>
+                                <Button DockPanel.Dock="Bottom" x:Name="AddSquadButton" Click="OpenAddSquadDialog"
+                                        Margin="7">Новый отряд</Button>
+                                <ListBox x:Name="SquadsListBox" Margin="7"></ListBox>
+                            </DockPanel>
+                            <DockPanel Grid.Column="2"></DockPanel>
+                        </Grid>
+                    </materialDesign:DialogHost>
+                </materialDesign:DialogHost>
+            </materialDesign:DialogHost>
+        </materialDesign:DialogHost>
     </Grid>
 </Window>
