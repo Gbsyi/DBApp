@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
-        Title="Меню" Height="250" Width="300" WindowStartupLocation="CenterScreen" Closing="OnClose" ResizeMode="NoResize">
+        Title="Меню" Height="300" Width="300" WindowStartupLocation="CenterScreen" Closing="OnClose" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -19,13 +19,15 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="20px"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="title" Grid.Column="1" Grid.Row="1" Text="Меню" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Button x:Name="secondButton" Margin="0 5" Grid.Column="1" Grid.Row="3" Click="OpenCounselorMenu">Отряды</Button>
         <Button x:Name="thirdButton" Margin="0 5" Grid.Column="1" Grid.Row="4" Click="OpenHRWindow" Cursor="Hand">Сотрудники</Button>
         <Button x:Name="fourthButton" Margin="0 5" Grid.Column="1" Grid.Row="2" Click="OpenEventsWindow" Cursor="Hand">Расписание</Button>
-        <Button x:Name="firstButton" Margin="0 5" Grid.Column="1" Grid.Row="5" Click="OpenMainMenu">Админ-панель</Button>
+        <Button x:Name="fifthButton" Margin="0 5" Grid.Column="1" Grid.Row="5" Click="OpenCampsWindow">Лагеря</Button>
+        <Button x:Name="firstButton" Margin="0 5" Grid.Column="1" Grid.Row="6" Click="OpenMainMenu">Админ-панель</Button>
 
     </Grid>
 </Window>

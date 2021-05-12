@@ -55,9 +55,16 @@ namespace DBApp
         }
         private void OpenEventsWindow(object sender, RoutedEventArgs e)
         {
-            CampsWindow cw = new();
-            cw.Owner = this;
-            cw.Show();
+            EventsWindow ew = new();
+            ew.Owner = this;
+            ew.Show();
+            this.Hide();
+        }
+        private void OpenCampsWindow(object sender, RoutedEventArgs e)
+        {
+            CampsWindow camps = new();
+            camps.Owner = this;
+            camps.Show();
             this.Hide();
         }
     }

@@ -1,0 +1,179 @@
+﻿<Window x:Class="DBApp.EventsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DBApp"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="EventsWindow" Height="500" Width="900" Closing="Window_Closing" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 0 1">
+            <MenuItem Header="Сменить пользователя" Click="ChangeUser"></MenuItem>
+        </Menu>
+        <materialDesign:DialogHost Grid.Row="1" x:Name="NewGroupDialog">
+            <materialDesign:DialogHost.DialogContent>
+                <DockPanel>
+                    <Label DockPanel.Dock="Top" Margin="7" FontWeight="Bold">Новое событие, введите описание</Label>
+                    <Separator DockPanel.Dock="Top"/>
+                    <TextBox    DockPanel.Dock="Top" 
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="Wrap"
+                                MaxLength="100"
+                                materialDesign:HintAssist.Hint="Описание"
+                                Padding="7" Margin="7 7 7 11" 
+                                x:Name="DescriptionTB"></TextBox>
+                    <Button DockPanel.Dock="Bottom" Click="AddNewEvent">Сохранить</Button>
+                    <Label DockPanel.Dock="Top"></Label>
+                </DockPanel>
+            </materialDesign:DialogHost.DialogContent>
+            <materialDesign:DialogHost Grid.Row="1" x:Name="OrganizersGroupDialog">
+                <materialDesign:DialogHost.DialogContent>
+                    <Grid Width="600" Height="350">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <DockPanel Grid.Column="0">
+                            <Label Margin="7" 
+                                       HorizontalAlignment="Center" 
+                                       FontWeight="Bold"
+                                       DockPanel.Dock="Top">Группа</Label>
+                            <Separator DockPanel.Dock="Top"/>
+                            <Button DockPanel.Dock="Bottom" Margin="0 0 1.5 0" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Закрыть</Button>
+                            <Button DockPanel.Dock="Bottom" Margin="0 1 1.5 1" 
+                                    Click="AddNewOrganizersGroup"
+                                    x:Name ="NewOrganizersButton">Добавить</Button>
+                            <ListBox x:Name="OrganizersGroupsListBox" DockPanel.Dock="Top"></ListBox>
+                        </DockPanel>
+                        <DockPanel Grid.Column="1">
+                            <Label Margin="7" 
+                                       HorizontalAlignment="Center" 
+                                       FontWeight="Bold"
+                                       DockPanel.Dock="Top">Сотрудники в группе</Label>
+                            <Separator DockPanel.Dock="Top"/>
+                            <Button DockPanel.Dock="Bottom" Margin="1.5 0 0 0" x:Name="OrganizersGroupDialogApplyButton"
+                                    Click="ChooseOrganizersGroup" IsEnabled="False">Выбрать группу</Button>
+                            <Button DockPanel.Dock="Bottom" Margin="0 1 1.5 1" 
+                                    IsEnabled="False"
+                                    Click="AddWorkerToGroup"
+                                    x:Name="AddWorkerToGroupButton">Добавить</Button>
+                            <ListBox DockPanel.Dock="Top" x:Name="OrganizersListBox" />
+                        </DockPanel>
+                    </Grid>
+                </materialDesign:DialogHost.DialogContent>
+                <materialDesign:DialogHost x:Name="CampGroupsDialog">
+                    <materialDesign:DialogHost.DialogContent>
+                        <Grid Width="600" Height="350">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <DockPanel Grid.Column="0">
+                                <Label Margin="7" 
+                                       HorizontalAlignment="Center" 
+                                       FontWeight="Bold"
+                                       DockPanel.Dock="Top">Группа</Label>
+                                <Separator DockPanel.Dock="Top"/>
+                                <Button DockPanel.Dock="Bottom" Margin="0 0 1.5 0" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">Закрыть</Button>
+                                <Button DockPanel.Dock="Bottom" Margin="0 1 1.5 1"
+                                        Click="AddNewCampGroup"
+                                        x:Name="AddNewCampGroupButton">Добавить</Button>
+                                <ListBox x:Name="CampGroupsListBox" DockPanel.Dock="Top"></ListBox>
+                            </DockPanel>
+                            <DockPanel Grid.Column="1">
+                                <Label Margin="7" 
+                                       HorizontalAlignment="Center" 
+                                       FontWeight="Bold"
+                                       DockPanel.Dock="Top">Лагеря в группе</Label>
+                                <Separator DockPanel.Dock="Top"/>
+                                <Button DockPanel.Dock="Bottom" x:Name="ChooseGroupDialogApplyButton"
+                                        Margin="1.5 0 0 0" Click="ChooseGroup" IsEnabled="False">Выбрать группу</Button>
+                                <Button DockPanel.Dock="Bottom" Margin="0 1 1.5 1"
+                                        IsEnabled="False"
+                                        x:Name="AddCampToGroupButton"
+                                        Click="AddCampToGroup">Добавить</Button>
+                                <ListBox DockPanel.Dock="Top" x:Name="CampsListBox"></ListBox>
+                            </DockPanel>
+                        </Grid>
+                    </materialDesign:DialogHost.DialogContent>
+                    <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MaxWidth="250"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel x:Name="LeftPanel" Grid.Column="0">
+                        <Label DockPanel.Dock="Top" HorizontalAlignment="Center" FontWeight="Bold" Padding="7">Добавить событие</Label>
+                        <Separator DockPanel.Dock="Top"/>
+                        <TextBox DockPanel.Dock="Top" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                                 materialDesign:HintAssist.Hint="Имя события"
+                                 Padding="7" Margin="7 7 7 3.5" 
+                                 x:Name="EventNameTB"></TextBox>
+                        <DatePicker DockPanel.Dock="Top" 
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    Margin="7 3.5"
+                                    Padding="7"
+                                    x:Name="EventDatePicker"
+                                    materialDesign:HintAssist.Hint="Дата события"></DatePicker>
+                        <materialDesign:TimePicker DockPanel.Dock="Top"
+                                                   Style="{StaticResource MaterialDesignOutlinedTimePicker}"
+                                                   Margin="7 3.5"
+                                                   Padding="7"
+                                                   Is24Hours="True"
+                                                   x:Name="EventTimePicker"
+                                                   materialDesign:HintAssist.Hint="Время события"></materialDesign:TimePicker>
+                        <DockPanel DockPanel.Dock="Top">
+                            <Button DockPanel.Dock="Top"
+                                    Margin="7 3.5"
+                                    Padding="7"
+                                    Click="ShowCampGroups">Добавить группу лагерей</Button>
+                            <TextBlock DockPanel.Dock="Top" Margin="7 3.5" 
+                                       x:Name="ChosenCampGroup">Выбрано:</TextBlock>
+                        </DockPanel>
+                        <DockPanel DockPanel.Dock="Top">
+                            <Button DockPanel.Dock="Top"
+                                    Padding="7"
+                                    Margin="7 3.5"
+                                    Click="ShowOrganizersGroup" Cursor="Hand">Добавить группу организаторов</Button>
+                            <TextBlock DockPanel.Dock="Top" Margin="7 3.5" 
+                                       x:Name="ChosenOrganizersGroup">Выбрано:</TextBlock>
+                        </DockPanel>
+                        <Button DockPanel.Dock="Bottom" Margin="7" Click="AddEvent">Добавить</Button>
+                        <Label DockPanel.Dock="Top"></Label>
+                    </DockPanel>
+                    <DockPanel x:Name="RightPanel" Grid.Column="2">
+                        <Label DockPanel.Dock="Top" 
+                               HorizontalAlignment="Center" 
+                               FontWeight="Bold" 
+                               Padding="7">Расписание</Label>
+                        <DataGrid DockPanel.Dock="Top" 
+                                  IsReadOnly="True"
+                                  x:Name="mainTable"></DataGrid>
+                
+                    </DockPanel>
+                </Grid>
+                </materialDesign:DialogHost>
+            </materialDesign:DialogHost>
+        </materialDesign:DialogHost>
+    </Grid>
+</Window>
