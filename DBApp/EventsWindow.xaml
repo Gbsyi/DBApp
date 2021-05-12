@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="EventsWindow" Height="500" Width="900" Closing="Window_Closing" Loaded="Window_Loaded">
+        Title="Расписание" Height="500" Width="900" Closing="Window_Closing" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,7 +27,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 0 1">
-            <MenuItem Header="Сменить пользователя" Click="ChangeUser"></MenuItem>
+            <MenuItem Header="Вернуться в меню" Click="ChangeUser"></MenuItem>
         </Menu>
         <materialDesign:DialogHost Grid.Row="1" x:Name="NewGroupDialog">
             <materialDesign:DialogHost.DialogContent>

@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="HRWindow" Height="450" Width="800" Closing="Window_Closing" Loaded="Window_Loaded">
+        Title="Сотрудники" Height="450" Width="800" Closing="Window_Closing" Loaded="Window_Loaded">
     <Window.Resources>
     <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>

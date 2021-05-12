@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
-        Title="Window1" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Loaded="TableViewLoaded" Closing="OnClose">
+        Title="Панель управления" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Loaded="TableViewLoaded" Closing="OnClose">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>

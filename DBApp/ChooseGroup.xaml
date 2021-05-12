@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBApp"
         mc:Ignorable="d"
-        Title="ChooseGroup" Height="150" Width="190" Loaded="WindowLoaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        Title="Выбор группы" Height="150" Width="190" Loaded="WindowLoaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
