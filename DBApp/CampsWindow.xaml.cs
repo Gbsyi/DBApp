@@ -116,6 +116,36 @@ namespace DBApp
         private void CampSelected(object sender, SelectionChangedEventArgs e)
         {
             //Вывод информации
+            //DockPanel - Info
+            int campId = int.Parse(WorkDS.Tables["camps"].Rows[CampsListBox.SelectedIndex].ItemArray[1].ToString());
+            using(SqlConnection conn = new(Connection))
+            {
+                conn.Open();
+                SqlDataAdapter sda = new($"exec [dbo].[showCampInfo] {campId}", conn);
+                WorkDS.Tables["campInfo"]?.Clear();
+                Info.Children?.Clear();
+                sda.Fill(WorkDS, "campInfo");
+                var campInfo = WorkDS.Tables["campInfo"].Rows[0];
+                TextBlock campName = new() { Text = $"Лагерь: {campInfo.ItemArray[1]}", Margin = new(7) };
+                DockPanel.SetDock(campName, Dock.Top);
+                Info.Children.Add(campName);
+                TextBlock campDescription = new() { Text = $"Описание: {campInfo.ItemArray[2]}", Margin= new(7), TextWrapping = TextWrapping.Wrap };
+                DockPanel.SetDock(campDescription, Dock.Top);
+                Info.Children.Add(campDescription);
+                TextBlock campDirector = new() { Text = $"Директор: {campInfo.ItemArray[3]} {campInfo.ItemArray[4]} {campInfo.ItemArray[5]}", Margin = new(7), 
+                    TextWrapping =TextWrapping.Wrap };
+                DockPanel.SetDock(campDirector, Dock.Top);
+                Info.Children.Add(campDirector);
+                TextBlock campManager = new()
+                {
+                    Text = $"Директор: {campInfo.ItemArray[6]} {campInfo.ItemArray[7]} {campInfo.ItemArray[8]}",
+                    Margin = new(7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(campManager, Dock.Top);
+                Info.Children.Add(campManager);
+                conn.Close();
+            }
         }
         private void AddCamp(object sender, RoutedEventArgs e)
         {
@@ -247,6 +277,76 @@ namespace DBApp
         private void SquadSelected(object sender, SelectionChangedEventArgs e)
         {
             //Вывод информации
+            int squadId = int.Parse(WorkDS.Tables["squads"].Rows[SquadsListBox.SelectedIndex].ItemArray[1].ToString());
+            using (SqlConnection conn = new(Connection))
+            {
+                conn.Open();
+                SqlDataAdapter sda = new($"exec [dbo].[showSquadInfo] {squadId}", conn);
+                WorkDS.Tables["squadInfo"]?.Clear();
+                Info.Children?.Clear();
+                sda.Fill(WorkDS, "squadInfo");
+                var squadInfo = WorkDS.Tables["squadInfo"].Rows[0];
+                TextBlock squadName = new() { Text = $"Лагерь: {squadInfo.ItemArray[1]}", Margin = new(7) };
+                DockPanel.SetDock(squadName, Dock.Top);
+                Info.Children.Add(squadName);
+                TextBlock squadCounselor = new()
+                {
+                    Text = $"Вожатый: {squadInfo.ItemArray[2]} {squadInfo.ItemArray[3]} {squadInfo.ItemArray[4]}",
+                    Margin = new(7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(squadCounselor, Dock.Top);
+                Info.Children.Add(squadCounselor);
+                TextBlock squadSeniorCounselor = new()
+                {
+                    Text = $"Старший вожатый: {squadInfo.ItemArray[5]} {squadInfo.ItemArray[6]} {squadInfo.ItemArray[7]}",
+                    Margin = new(7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(squadSeniorCounselor, Dock.Top);
+                Info.Children.Add(squadSeniorCounselor);
+                TextBlock squadSeason = new()
+                {
+                    Text = $"Сезон: {squadInfo.ItemArray[8]}",
+                    Margin = new(7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(squadSeason, Dock.Top);
+                Info.Children.Add(squadSeason);
+                TextBlock squadSeasonBeginning = new()
+                {
+                    Text = $"Начало: {squadInfo.ItemArray[9]}",
+                    Margin = new(14, 7, 7, 7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(squadSeasonBeginning, Dock.Top);
+                Info.Children.Add(squadSeasonBeginning);
+                TextBlock squadSeasonEnding = new()
+                {
+                    Text = $"Конец: {squadInfo.ItemArray[10]}",
+                    Margin = new(14, 7, 7, 7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(squadSeasonEnding, Dock.Top);
+                Info.Children.Add(squadSeasonEnding);
+                TextBlock squadHouse = new()
+                {
+                    Text = $"Корпус: {squadInfo.ItemArray[11]}",
+                    Margin = new(7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(squadHouse, Dock.Top);
+                Info.Children.Add(squadHouse);
+                TextBlock squadHouseRooms = new()
+                {
+                    Text = $"Количество комнат: {squadInfo.ItemArray[12]}",
+                    Margin = new(14, 7, 7, 7),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                DockPanel.SetDock(squadHouseRooms, Dock.Top);
+                Info.Children.Add(squadHouseRooms);
+                conn.Close();
+            }
         }
 
         /////////////////////////////////////////////////////////////////Сезон//////////////////////////////////////////////////////////////////

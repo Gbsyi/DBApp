@@ -204,17 +204,24 @@
                             </Grid.ColumnDefinitions>
                             <DockPanel Grid.Column="0">
                                 <Label DockPanel.Dock="Top" HorizontalAlignment="Center" FontWeight="Bold" Margin="7">Лагеря</Label>
+                                <Separator DockPanel.Dock="Top"/>
                                 <Button DockPanel.Dock="Bottom" x:Name="AddCampButton" Click="OpenAddCampDialog"
                                         Margin="7">Новый лагерь</Button>
                                 <ListBox x:Name="CampsListBox" Margin="7"></ListBox>
                             </DockPanel>
                             <DockPanel Grid.Column="1">
                                 <Label DockPanel.Dock="Top" HorizontalAlignment="Center" FontWeight="Bold" Margin="7">Отряды</Label>
+                                <Separator DockPanel.Dock="Top"/>
                                 <Button DockPanel.Dock="Bottom" x:Name="AddSquadButton" Click="OpenAddSquadDialog"
                                         Margin="7">Новый отряд</Button>
                                 <ListBox x:Name="SquadsListBox" Margin="7"></ListBox>
                             </DockPanel>
-                            <DockPanel Grid.Column="2"></DockPanel>
+                            <DockPanel Grid.Column="2">
+                                <Label DockPanel.Dock="Top" HorizontalAlignment="Center" FontWeight="Bold" Margin="7">Информация</Label>
+                                <Separator DockPanel.Dock="Top"/>
+                                <DockPanel DockPanel.Dock="Top" x:Name="Info"></DockPanel>
+                                <Label DockPanel.Dock="Top"></Label>
+                            </DockPanel>
                         </Grid>
                     </materialDesign:DialogHost>
                 </materialDesign:DialogHost>
